@@ -1,0 +1,62 @@
+/* Estilos de la tarjeta de proyecto */
+.tarjeta-proyecto {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  overflow: hidden;
+  transition: border-color var(--transicion);
+}
+
+.tarjeta-proyecto:hover {
+  border-color: var(--color-acento);
+}
+
+.tarjeta-proyecto__imagen {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.tarjeta-proyecto__cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-3);
+}
+
+.tarjeta-proyecto__titulo {
+  font-size: 1.15rem;
+}
+
+.tarjeta-proyecto__descripcion {
+  color: var(--color-texto-tenue);
+  font-size: 0.95rem;
+}
+
+.tarjeta-proyecto__etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1);
+}
+
+.tarjeta-proyecto__etiquetas li {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background-color: var(--color-superficie-alta);
+  color: var(--color-texto-tenue);
+}
+
+.tarjeta-proyecto__acciones {
+  display: flex;
+  gap: var(--espacio-3);
+  margin-top: auto;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.tarjeta-proyecto__acciones a {
+  color: var(--color-acento);
+}
