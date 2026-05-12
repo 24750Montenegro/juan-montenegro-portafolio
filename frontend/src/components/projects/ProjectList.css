@@ -1,0 +1,10 @@
+/* Cuadricula responsive de proyectos */
+.lista-proyectos {
+  display: grid;
+  gap: var(--espacio-3);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.lista-proyectos__vacio {
+  color: var(--color-texto-tenue);
+}

@@ -1,4 +1,4 @@
-/* Estilos del panel de administracion */
+/* Estilos del panel de administracion de proyectos */
 .panel {
   display: flex;
   flex-direction: column;
@@ -9,6 +9,73 @@
   font-size: clamp(1.6rem, 4vw, 2.2rem);
 }
 
+.panel__formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-3);
+  max-width: 560px;
+}
+
+.panel__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  font-size: 0.9rem;
+}
+
+.panel__campo input,
+.panel__campo textarea {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pequeno);
+  background-color: var(--color-superficie-alta);
+  resize: vertical;
+}
+
+.panel__campo input:focus,
+.panel__campo textarea:focus {
+  outline: 2px solid var(--color-acento);
+}
+
+.panel__error {
+  color: var(--color-error);
+  font-size: 0.9rem;
+}
+
 .panel__aviso {
   color: var(--color-texto-tenue);
+}
+
+.panel__lista ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  margin-top: var(--espacio-2);
+}
+
+.panel__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pequeno);
+  background-color: var(--color-superficie);
+}
+
+.panel__eliminar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-error);
+  font-size: 0.85rem;
+}
+
+.panel__eliminar:hover {
+  text-decoration: underline;
 }
