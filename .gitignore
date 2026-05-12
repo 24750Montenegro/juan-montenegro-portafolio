@@ -6,6 +6,9 @@ node_modules/
 .env.local
 .env.*.local
 
+# Compose local
+docker-compose.yml
+
 # Compilados y builds
 dist/
 build/

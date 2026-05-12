@@ -23,13 +23,16 @@ juan-montenegro-portafolio/
 
 ## Puesta en marcha con Docker
 
-1. Copiar los archivos de ejemplo de variables de entorno:
+1. Copiar `docker-compose.example.yml` a `docker-compose.yml`:
+   - Linux/macOS: `cp docker-compose.example.yml docker-compose.yml`
+   - Windows (PowerShell): `Copy-Item docker-compose.example.yml docker-compose.yml`
+2. Copiar los archivos de ejemplo de variables de entorno:
    - `.env.example` a `.env` en la raiz.
    - `backend/.env.example` a `backend/.env`.
    - `frontend/.env.example` a `frontend/.env`.
-2. Completar los valores reales (base de datos, JWT, Cloudinary).
-3. Levantar los servicios: `docker compose up --build`.
-4. Aplicar el esquema de base de datos: `docker compose exec backend npm run migrate`.
+3. Completar los valores reales (base de datos, JWT, Cloudinary).
+4. Levantar los servicios: `docker compose up --build`.
+5. Aplicar el esquema de base de datos: `docker compose exec backend npm run migrate`.
 
 La SPA queda disponible en `http://localhost:5173` y la API en `http://localhost:4000/api`.
 
