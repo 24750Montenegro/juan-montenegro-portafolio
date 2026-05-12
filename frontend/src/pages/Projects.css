@@ -1,0 +1,19 @@
+/* Estilos de la pagina de proyectos */
+.proyectos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.proyectos__titulo {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+}
+
+.proyectos__aviso,
+.proyectos__error {
+  color: var(--color-texto-tenue);
+}
+
+.proyectos__error {
+  color: var(--color-error);
+}

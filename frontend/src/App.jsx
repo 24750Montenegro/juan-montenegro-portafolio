@@ -1,12 +1,17 @@
-// Componente raiz de la SPA del portafolio
+// Componente raiz: estructura comun y enrutado de la SPA
+import { Navbar } from './components/layout/Navbar.jsx';
+import { Footer } from './components/layout/Footer.jsx';
+import { AppRouter } from './routes/AppRouter.jsx';
 import './App.css';
 
 export default function App() {
   return (
     <div className="app">
+      <Navbar />
       <main className="app__contenido">
-        <h1>Portafolio en construccion</h1>
+        <AppRouter />
       </main>
+      <Footer />
     </div>
   );
 }

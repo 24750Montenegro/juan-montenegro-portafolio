@@ -1,0 +1,32 @@
+/* Estilos de la pagina de inicio */
+.inicio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  align-items: flex-start;
+  padding-block: var(--espacio-5);
+}
+
+.inicio__titulo {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+.inicio__subtitulo {
+  color: var(--color-texto-tenue);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  max-width: 40ch;
+}
+
+.inicio__cta {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radio-pequeno);
+  background-color: var(--color-acento);
+  color: #0b0d11;
+  font-weight: 600;
+}
+
+.inicio__cta:hover {
+  background-color: var(--color-acento-oscuro);
+  color: #0b0d11;
+}

@@ -1,0 +1,37 @@
+/* Estilos del boton reutilizable y sus variantes */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-1);
+  padding: 0.6rem 1.2rem;
+  border: 1px solid transparent;
+  border-radius: var(--radio-pequeno);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transicion), border-color var(--transicion);
+}
+
+.boton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.boton--primario {
+  background-color: var(--color-acento);
+  color: #0b0d11;
+}
+
+.boton--primario:hover:not(:disabled) {
+  background-color: var(--color-acento-oscuro);
+}
+
+.boton--secundario {
+  background-color: transparent;
+  border-color: var(--color-borde);
+  color: var(--color-texto);
+}
+
+.boton--secundario:hover:not(:disabled) {
+  border-color: var(--color-acento);
+}
