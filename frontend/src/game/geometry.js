@@ -23,16 +23,22 @@ export const WALL_INT = [
   [2311, 934],
 ]
 
-// Huella de la base de la pared interna en el piso (banda solida, no traspasable)
+// Huella de la pared interna: dos bandas finas (ancho isometrico) con la puerta en medio
 export const WALL_COLLISION = [
-  [1628, 1278],
-  [1798, 1214],
-  [1969, 1123],
-  [2311, 934],
-  [2261, 814],
-  [1919, 1003],
-  [1748, 1094],
-  [1578, 1158],
+  // Segmento izquierdo de la puerta
+  [
+    [1626, 1267],
+    [1798, 1214],
+    [1823, 1232],
+    [1653, 1280],
+  ],
+  // Segmento derecho de la puerta
+  [
+    [1969, 1123],
+    [2305, 906],
+    [2325, 929],
+    [1994, 1141],
+  ],
 ]
 
 // Diagonal que separa la profundidad de la pared interna (P1 abajo-izq, P2 arriba-der)

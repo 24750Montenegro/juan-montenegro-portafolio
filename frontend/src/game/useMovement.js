@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { FLOOR, WALL_COLLISION, pointInPolygon } from './geometry'
 
-// Pisable: dentro del piso y fuera de la base de la pared interna
+// Pisable: dentro del piso y fuera de las bandas de la pared interna
 function canWalk(x, y) {
-  return pointInPolygon(x, y, FLOOR) && !pointInPolygon(x, y, WALL_COLLISION)
+  if (!pointInPolygon(x, y, FLOOR)) return false
+  return !WALL_COLLISION.some((band) => pointInPolygon(x, y, band))
 }
 
 // Velocidad en pixeles de imagen por segundo
