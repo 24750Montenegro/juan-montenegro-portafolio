@@ -1,0 +1,43 @@
+.room-viewport {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #0c0c10;
+}
+
+.room-stage {
+  position: relative;
+  transform-origin: center center;
+  image-rendering: pixelated;
+}
+
+.room-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  user-select: none;
+}
+
+/* Overlay con el mismo fondo recortado a la pared interna */
+.wall-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Placeholder del personaje hasta tener las spritesheets */
+.character {
+  position: absolute;
+  background: rgba(80, 160, 255, 0.85);
+  border: 2px solid #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
