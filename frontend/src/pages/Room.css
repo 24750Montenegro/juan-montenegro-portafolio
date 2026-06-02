@@ -1,14 +1,14 @@
 .room-viewport {
   position: fixed;
   inset: 0;
-  display: grid;
-  place-items: center;
   overflow: hidden;
   background: #0c0c10;
 }
 
 .room-stage {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   transform-origin: center center;
   image-rendering: pixelated;
 }

@@ -48,7 +48,7 @@ export default function Room() {
         style={{
           width: ROOM_WIDTH,
           height: ROOM_HEIGHT,
-          transform: `scale(${scale})`,
+          transform: `translate(-50%, -50%) scale(${scale})`,
         }}
       >
         <img className="room-bg" src={roomImg} alt="habitacion" draggable="false" />
