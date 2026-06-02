@@ -23,21 +23,22 @@ export const WALL_INT = [
   [2311, 934],
 ]
 
-// Huella de la pared interna: dos bandas finas (ancho isometrico) con la puerta en medio
+// Huella de la pared interna: dos bandas con la puerta en medio.
+// El borde cercano lleva margen extra hacia el frente para chocar antes.
 export const WALL_COLLISION = [
   // Segmento izquierdo de la puerta
   [
     [1626, 1267],
     [1798, 1214],
-    [1823, 1232],
-    [1653, 1280],
+    [1868, 1264],
+    [1698, 1312],
   ],
   // Segmento derecho de la puerta
   [
     [1969, 1123],
     [2305, 906],
-    [2325, 929],
-    [1994, 1141],
+    [2370, 961],
+    [2039, 1173],
   ],
 ]
 
