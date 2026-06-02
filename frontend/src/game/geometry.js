@@ -38,10 +38,42 @@ function band(f0, f1) {
   return [back(f0), back(f1), front(f1), front(f0)]
 }
 
+// Banda a lo largo de un segmento usando su propia normal (no FORWARD global),
+// para paredes con cualquier inclinacion. front: margen hacia adentro del cuarto;
+// back: margen hacia afuera. inward: vector aproximado hacia adentro para orientar
+// la normal (su signo, no su magnitud).
+function bandAlong(p0, p1, front, back, inward) {
+  const dx = p1[0] - p0[0]
+  const dy = p1[1] - p0[1]
+  const len = Math.hypot(dx, dy) || 1
+  let nx = -dy / len
+  let ny = dx / len
+  if (nx * inward[0] + ny * inward[1] < 0) {
+    nx = -nx
+    ny = -ny
+  }
+  const inP = (p) => [p[0] + nx * front, p[1] + ny * front]
+  const outP = (p) => [p[0] - nx * back, p[1] - ny * back]
+  return [outP(p0), outP(p1), inP(p1), inP(p0)]
+}
+
+// Pared exterior derecha (pared exterior 2): borde trasero-derecho del piso.
+// Margen de choque hacia adentro del cuarto para no subirse a la pared.
+const EXT2_FRONT = 60 // hacia adentro del cuarto (abajo-izquierda)
+const EXT2_BACK = 15 // hacia afuera, cubre la linea de la pared
+
+// Pared exterior izquierda (pared exterior 1, la del ventanal): borde trasero-izq.
+const EXT1_FRONT = 45 // hacia adentro del cuarto (abajo-derecha)
+const EXT1_BACK = 15 // hacia afuera, cubre la linea de la pared
+
 // Huella de la pared interna: dos bandas con la puerta en medio
 export const WALL_COLLISION = [
   band([1626, 1267], [1798, 1214]), // segmento izquierdo
   band([1969, 1123], [2305, 906]), // segmento derecho
+  // Pared exterior derecha: empuja al jugador hacia adentro (normal abajo-izq)
+  bandAlong([1331, 449], [2717, 1111], EXT2_FRONT, EXT2_BACK, [-1, 1]),
+  // Pared exterior izquierda: empuja al jugador hacia adentro (normal abajo-der)
+  bandAlong([129, 1060], [1331, 449], EXT1_FRONT, EXT1_BACK, [1, 1]),
 ]
 
 // Borde cercano de la pared interna (P1 abajo-izq, P2 arriba-der): cubre al cruzarlo

@@ -32,12 +32,3 @@
   pointer-events: none;
   user-select: none;
 }
-
-/* Placeholder del personaje hasta tener las spritesheets */
-.character {
-  position: absolute;
-  background: rgba(80, 160, 255, 0.85);
-  border: 2px solid #fff;
-  border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-}

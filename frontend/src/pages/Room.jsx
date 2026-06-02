@@ -7,12 +7,9 @@ import {
   toClipPath,
 } from '../game/geometry'
 import { useMovement } from '../game/useMovement'
+import Character from '../components/game/Character'
 import roomImg from '../assets/habitación vacia.png'
 import './Room.css'
-
-// Tamano del personaje en pixeles de imagen (placeholder hasta tener sprites)
-const CHAR_W = 90
-const CHAR_H = 220
 
 // Punto inicial de los pies, dentro del piso
 const START = [1300, 1000]
@@ -53,16 +50,12 @@ export default function Room() {
       >
         <img className="room-bg" src={roomImg} alt="habitacion" draggable="false" />
 
-        <div
-          className={`character${moving ? ' moving' : ''}`}
-          data-facing={facing}
-          style={{
-            width: CHAR_W,
-            height: CHAR_H,
-            left: x - CHAR_W / 2,
-            top: y - CHAR_H,
-            zIndex: behindWall ? 1 : 3,
-          }}
+        <Character
+          x={x}
+          y={y}
+          facing={facing}
+          moving={moving}
+          zIndex={behindWall ? 1 : 3}
         />
 
         {/* Copia del fondo recortada a la pared interna, encima del personaje */}
