@@ -3,7 +3,7 @@ import {
   ROOM_WIDTH,
   ROOM_HEIGHT,
   WALL_INT,
-  WALL_INT_FRONT_Y,
+  isBehindWall,
   toClipPath,
 } from '../game/geometry'
 import { useMovement } from '../game/useMovement'
@@ -39,7 +39,7 @@ export default function Room() {
 
   const [x, y] = pos
   // Detras de la pared interna: el personaje pasa por debajo de ella
-  const behindWall = y < WALL_INT_FRONT_Y
+  const behindWall = isBehindWall(x, y)
 
   return (
     <div className="room-viewport" ref={viewportRef}>

@@ -23,8 +23,18 @@ export const WALL_INT = [
   [2311, 934],
 ]
 
-// Linea frontal de la pared interna: bajo ella el personaje va por delante
-export const WALL_INT_FRONT_Y = 1278
+// Diagonal que separa la profundidad de la pared interna (P1 abajo-izq, P2 arriba-der)
+export const WALL_DIAGONAL = [
+  [1626, 1267],
+  [2305, 906],
+]
+
+// Pies arriba-izquierda de la diagonal: el personaje va detras de la pared
+export function isBehindWall(x, y) {
+  const [[x1, y1], [x2, y2]] = WALL_DIAGONAL
+  const cross = (x2 - x1) * (y - y1) - (y2 - y1) * (x - x1)
+  return cross < 0
+}
 
 // Punto dentro de poligono por ray casting
 export function pointInPolygon(x, y, polygon) {
