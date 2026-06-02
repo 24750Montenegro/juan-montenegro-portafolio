@@ -23,16 +23,25 @@ const KEY_MAP = {
 
 // Mueve al personaje con WASD y lo mantiene dentro del piso.
 // start: punto inicial de los pies (x, y) en pixeles de imagen.
-export function useMovement(start) {
+// paused: si es true, ignora el teclado y detiene al personaje (p.ej. con un modal abierto).
+export function useMovement(start, paused = false) {
   const [pos, setPos] = useState(start)
   const [facing, setFacing] = useState('down')
   const [moving, setMoving] = useState(false)
 
   const posRef = useRef(start)
   const keys = useRef({ up: false, down: false, left: false, right: false })
+  const pausedRef = useRef(paused)
+
+  // Mantiene el ref sincronizado y suelta las teclas al pausar.
+  useEffect(() => {
+    pausedRef.current = paused
+    if (paused) keys.current = { up: false, down: false, left: false, right: false }
+  }, [paused])
 
   useEffect(() => {
     const onDown = (e) => {
+      if (pausedRef.current) return
       const dir = KEY_MAP[e.key.toLowerCase()]
       if (dir) {
         keys.current[dir] = true
@@ -51,6 +60,12 @@ export function useMovement(start) {
     const loop = (now) => {
       const dt = Math.min((now - last) / 1000, 0.05)
       last = now
+
+      if (pausedRef.current) {
+        setMoving(false)
+        raf = requestAnimationFrame(loop)
+        return
+      }
 
       let dx = 0
       let dy = 0

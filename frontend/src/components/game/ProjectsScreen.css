@@ -1,0 +1,191 @@
+.pscreen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #0a0a16;
+  color: #cfe9ff;
+  font-family: 'VT323', 'Courier New', monospace;
+  overflow: hidden;
+}
+
+/* Barra de titulo estilo ventana retro */
+.pscreen__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.5em 0.9em;
+  background: linear-gradient(180deg, #1b1b33, #12122a);
+  border-bottom: 2px solid #ff2e88;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1.3vw, 12px);
+  letter-spacing: 0.5px;
+}
+
+.pscreen__dot {
+  width: 0.9em;
+  height: 0.9em;
+  background: #2cf6c2;
+  box-shadow: 0 0 8px #2cf6c2;
+}
+
+.pscreen__title {
+  color: #fffb96;
+}
+
+.pscreen__user {
+  margin-left: auto;
+  color: #7a7ab0;
+}
+
+/* Cuerpo desplazable */
+.pscreen__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1em 1.1em 1.4em;
+  scrollbar-width: thin;
+  scrollbar-color: #ff2e88 #12122a;
+}
+
+.pscreen__body::-webkit-scrollbar {
+  width: 10px;
+}
+.pscreen__body::-webkit-scrollbar-thumb {
+  background: #ff2e88;
+}
+.pscreen__body::-webkit-scrollbar-track {
+  background: #12122a;
+}
+
+.pscreen__msg {
+  font-size: clamp(16px, 2.6vw, 26px);
+  color: #2cf6c2;
+}
+.pscreen__msg--err {
+  color: #ff6b6b;
+}
+
+.pscreen__caret {
+  animation: pscreen-blink 1s steps(1) infinite;
+}
+@keyframes pscreen-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Lista de proyectos */
+.pscreen__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9em;
+}
+
+.pscreen__card {
+  display: flex;
+  gap: 0.9em;
+  padding: 0.8em;
+  background: rgba(43, 43, 80, 0.35);
+  border: 2px solid #2b2b50;
+  border-left: 4px solid #2cf6c2;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.pscreen__card:hover {
+  border-color: #ff2e88;
+  background: rgba(255, 46, 136, 0.1);
+}
+
+.pscreen__thumb {
+  flex: none;
+  width: clamp(64px, 14%, 130px);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 2px solid #12122a;
+  image-rendering: auto;
+}
+
+.pscreen__info {
+  min-width: 0;
+}
+
+.pscreen__name {
+  margin: 0 0 0.25em;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(9px, 1.5vw, 14px);
+  color: #fffb96;
+  line-height: 1.5;
+}
+
+.pscreen__star {
+  color: #ff2e88;
+  margin-right: 0.4em;
+}
+
+.pscreen__desc {
+  margin: 0 0 0.5em;
+  font-size: clamp(15px, 2.2vw, 22px);
+  line-height: 1.15;
+  color: #cfe9ff;
+}
+
+.pscreen__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  margin: 0 0 0.5em;
+  padding: 0;
+}
+.pscreen__tag {
+  font-size: clamp(13px, 1.8vw, 18px);
+  padding: 0 0.5em;
+  color: #0a0a16;
+  background: #2cf6c2;
+}
+
+.pscreen__actions {
+  display: flex;
+  gap: 0.9em;
+  font-size: clamp(14px, 2vw, 20px);
+}
+.pscreen__actions a {
+  color: #7ad7ff;
+  text-decoration: none;
+}
+.pscreen__actions a:hover {
+  color: #ff2e88;
+  text-shadow: 0 0 6px #ff2e88;
+}
+
+.pscreen__btn {
+  margin-top: 0.6em;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 1.2vw, 11px);
+  color: #0a0a16;
+  background: #2cf6c2;
+  border: none;
+  padding: 0.7em 1em;
+  cursor: pointer;
+}
+.pscreen__btn:hover {
+  background: #ff2e88;
+}
+
+/* Scanlines CRT sutiles encima de todo el contenido */
+.pscreen__scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px,
+    rgba(0, 0, 0, 0.18) 4px
+  );
+  mix-blend-mode: multiply;
+}

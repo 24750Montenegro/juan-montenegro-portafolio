@@ -1,0 +1,73 @@
+/* Fondo atenuado: el cuarto sigue visible en los bordes */
+.screen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 6, 12, 0.55);
+  animation: screen-fade-in 160ms ease-out;
+}
+
+/* El marco se dimensiona por la imagen, conservando su proporcion */
+.screen-frame {
+  position: relative;
+  line-height: 0;
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.6));
+  animation: screen-pop-in 200ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+.screen-frame__img {
+  display: block;
+  max-width: 94vw;
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  image-rendering: pixelated;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Contenido recortado al area transparente de la pantalla */
+.screen-frame__content {
+  position: absolute;
+  overflow: hidden;
+  line-height: normal;
+}
+
+/* Boton de cierre, esquina superior derecha del marco */
+.screen-frame__close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  color: #0b0b16;
+  background: #ff4d6d;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(255, 77, 109, 0.7);
+  transition: transform 120ms ease;
+}
+
+.screen-frame__close:hover {
+  transform: scale(1.1);
+}
+
+@keyframes screen-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes screen-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}

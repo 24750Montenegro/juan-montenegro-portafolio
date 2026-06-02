@@ -7,7 +7,11 @@ import {
   toClipPath,
 } from '../game/geometry'
 import { useMovement } from '../game/useMovement'
+import { INTERACTABLES, nearestInteractable } from '../game/interactables'
 import Character from '../components/game/Character'
+import ScreenModal from '../components/game/ScreenModal'
+import ProjectsScreen from '../components/game/ProjectsScreen'
+import BreakoutGame from '../components/game/BreakoutGame'
 import roomImg from '../assets/habitación vacia.png'
 import './Room.css'
 
@@ -17,7 +21,9 @@ const START = [1300, 1000]
 const wallClip = toClipPath(WALL_INT)
 
 export default function Room() {
-  const { pos, facing, moving } = useMovement(START)
+  // 'monitor' | 'tv' | null. Con un modal abierto se pausa el movimiento.
+  const [activeModal, setActiveModal] = useState(null)
+  const { pos, facing, moving } = useMovement(START, activeModal !== null)
   const [scale, setScale] = useState(1)
   const viewportRef = useRef(null)
 
@@ -38,6 +44,20 @@ export default function Room() {
   // Detras de la pared interna: el personaje pasa por debajo de ella
   const behindWall = isBehindWall(x, y)
 
+  // Objeto interactuable mas cercano (solo si no hay un modal abierto)
+  const near = activeModal ? null : nearestInteractable(x, y)
+
+  // Tecla E para abrir el objeto cercano
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key.toLowerCase() === 'e' && near && !activeModal) {
+        setActiveModal(near.screen)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [near, activeModal])
+
   return (
     <div className="room-viewport" ref={viewportRef}>
       <div
@@ -49,6 +69,17 @@ export default function Room() {
         }}
       >
         <img className="room-bg" src={roomImg} alt="habitacion" draggable="false" />
+
+        {/* Marcadores de zona interactuable (provisional, hasta colocar objetos) */}
+        {INTERACTABLES.map((it) => (
+          <div
+            key={it.id}
+            className={`interact-marker${near?.id === it.id ? ' is-near' : ''}`}
+            style={{ left: it.pos[0], top: it.pos[1] }}
+          >
+            <span className="interact-marker__key">E</span>
+          </div>
+        ))}
 
         <Character
           x={x}
@@ -68,6 +99,21 @@ export default function Room() {
           style={{ clipPath: wallClip, WebkitClipPath: wallClip }}
         />
       </div>
+
+      {/* Aviso de interaccion */}
+      {near && (
+        <div className="room-prompt">
+          <span className="room-prompt__key">E</span>
+          <span>{near.label}</span>
+        </div>
+      )}
+
+      {/* Pantalla / modal del objeto activo */}
+      {activeModal && (
+        <ScreenModal frameId={activeModal} onClose={() => setActiveModal(null)}>
+          {activeModal === 'monitor' ? <ProjectsScreen /> : <BreakoutGame />}
+        </ScreenModal>
+      )}
     </div>
   )
 }

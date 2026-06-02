@@ -32,3 +32,78 @@
   pointer-events: none;
   user-select: none;
 }
+
+/* Marcador de zona interactuable (provisional, hasta colocar objetos) */
+.interact-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 4px solid rgba(124, 240, 198, 0.45);
+  background: radial-gradient(circle, rgba(124, 240, 198, 0.18), transparent 70%);
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.interact-marker__key {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 28px;
+  color: #7cf0c6;
+  text-shadow: 0 0 8px #2cf6c2;
+}
+
+.interact-marker.is-near {
+  opacity: 1;
+  border-color: #ff2e88;
+  background: radial-gradient(circle, rgba(255, 46, 136, 0.28), transparent 70%);
+  animation: marker-pulse 1s ease-in-out infinite;
+}
+
+.interact-marker.is-near .interact-marker__key {
+  color: #fff;
+  text-shadow: 0 0 10px #ff2e88;
+}
+
+@keyframes marker-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+}
+
+/* Aviso de interaccion, fijo en pantalla */
+.room-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 36px;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.55em 1.1em;
+  background: rgba(10, 10, 22, 0.85);
+  border: 2px solid #2cf6c2;
+  color: #cfe9ff;
+  font-family: 'VT323', 'Courier New', monospace;
+  font-size: 26px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 16px rgba(44, 246, 194, 0.3);
+}
+
+.room-prompt__key {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 13px;
+  color: #0a0a16;
+  background: #2cf6c2;
+  padding: 0.5em 0.7em;
+  border-radius: 4px;
+}
