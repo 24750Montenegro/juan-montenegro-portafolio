@@ -23,23 +23,21 @@ export const WALL_INT = [
   [2311, 934],
 ]
 
-// Huella de la pared interna: dos bandas con la puerta en medio.
-// El borde cercano lleva margen extra hacia el frente para chocar antes.
+// Direccion hacia el frente en isometrico (abajo-derecha) y grosor+margen de la pared
+const FORWARD = [0.81, 0.58]
+const WALL_DEPTH = 110
+
+// Genera una banda a partir del borde frontal extendido hacia el jugador
+function band(f0, f1) {
+  const dx = FORWARD[0] * WALL_DEPTH
+  const dy = FORWARD[1] * WALL_DEPTH
+  return [f0, f1, [f1[0] + dx, f1[1] + dy], [f0[0] + dx, f0[1] + dy]]
+}
+
+// Huella de la pared interna: dos bandas con la puerta en medio
 export const WALL_COLLISION = [
-  // Segmento izquierdo de la puerta
-  [
-    [1626, 1267],
-    [1798, 1214],
-    [1868, 1264],
-    [1698, 1312],
-  ],
-  // Segmento derecho de la puerta
-  [
-    [1969, 1123],
-    [2305, 906],
-    [2370, 961],
-    [2039, 1173],
-  ],
+  band([1626, 1267], [1798, 1214]), // segmento izquierdo
+  band([1969, 1123], [2305, 906]), // segmento derecho
 ]
 
 // Borde cercano de la pared interna (P1 abajo-izq, P2 arriba-der): cubre al cruzarlo
