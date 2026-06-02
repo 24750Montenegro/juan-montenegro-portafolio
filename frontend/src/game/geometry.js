@@ -23,15 +23,19 @@ export const WALL_INT = [
   [2311, 934],
 ]
 
-// Direccion hacia el frente en isometrico (abajo-derecha) y grosor+margen de la pared
+// Direccion hacia el frente en isometrico (abajo-derecha)
 const FORWARD = [0.81, 0.58]
-const WALL_DEPTH = 110
+// Margen de choque a cada lado de la linea de la pared
+const WALL_FRONT = 110 // hacia el jugador (choque desde abajo)
+const WALL_BACK = 90 // hacia atras (choque desde arriba)
 
-// Genera una banda a partir del borde frontal extendido hacia el jugador
+// Genera una banda alrededor del borde de la pared, con margen a ambos lados
 function band(f0, f1) {
-  const dx = FORWARD[0] * WALL_DEPTH
-  const dy = FORWARD[1] * WALL_DEPTH
-  return [f0, f1, [f1[0] + dx, f1[1] + dy], [f0[0] + dx, f0[1] + dy]]
+  const fx = FORWARD[0]
+  const fy = FORWARD[1]
+  const back = (p) => [p[0] - fx * WALL_BACK, p[1] - fy * WALL_BACK]
+  const front = (p) => [p[0] + fx * WALL_FRONT, p[1] + fy * WALL_FRONT]
+  return [back(f0), back(f1), front(f1), front(f0)]
 }
 
 // Huella de la pared interna: dos bandas con la puerta en medio
