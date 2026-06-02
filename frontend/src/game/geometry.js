@@ -23,6 +23,18 @@ export const WALL_INT = [
   [2311, 934],
 ]
 
+// Huella de la base de la pared interna en el piso (banda solida, no traspasable)
+export const WALL_COLLISION = [
+  [1628, 1278],
+  [1798, 1214],
+  [1969, 1123],
+  [2311, 934],
+  [2261, 814],
+  [1919, 1003],
+  [1748, 1094],
+  [1578, 1158],
+]
+
 // Diagonal que separa la profundidad de la pared interna (P1 abajo-izq, P2 arriba-der)
 export const WALL_DIAGONAL = [
   [1626, 1267],

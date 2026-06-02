@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { FLOOR, pointInPolygon } from './geometry'
+import { FLOOR, WALL_COLLISION, pointInPolygon } from './geometry'
+
+// Pisable: dentro del piso y fuera de la base de la pared interna
+function canWalk(x, y) {
+  return pointInPolygon(x, y, FLOOR) && !pointInPolygon(x, y, WALL_COLLISION)
+}
 
 // Velocidad en pixeles de imagen por segundo
 const SPEED = 600
@@ -64,8 +69,8 @@ export function useMovement(start) {
         let nx = x
         let ny = y
         // Resuelve cada eje por separado para deslizar sobre los bordes
-        if (pointInPolygon(x + dx, y, FLOOR)) nx = x + dx
-        if (pointInPolygon(nx, y + dy, FLOOR)) ny = y + dy
+        if (canWalk(x + dx, y)) nx = x + dx
+        if (canWalk(nx, y + dy)) ny = y + dy
 
         if (nx !== x || ny !== y) {
           posRef.current = [nx, ny]
