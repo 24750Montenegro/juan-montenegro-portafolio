@@ -26,7 +26,7 @@ export const WALL_INT = [
 // Direccion hacia el frente en isometrico (abajo-derecha)
 const FORWARD = [0.81, 0.58]
 // Margen de choque a cada lado de la linea de la pared
-const WALL_FRONT = 110 // hacia el jugador (choque desde abajo)
+const WALL_FRONT = 50 // hacia el jugador (choque desde abajo)
 const WALL_BACK = 90 // hacia atras (choque desde arriba)
 
 // Genera una banda alrededor del borde de la pared, con margen a ambos lados
