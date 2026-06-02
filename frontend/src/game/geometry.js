@@ -41,10 +41,10 @@ export const WALL_COLLISION = [
   ],
 ]
 
-// Diagonal que separa la profundidad de la pared interna (P1 abajo-izq, P2 arriba-der)
+// Borde cercano de la pared interna (P1 abajo-izq, P2 arriba-der): cubre al cruzarlo
 export const WALL_DIAGONAL = [
-  [1626, 1267],
-  [2305, 906],
+  [1653, 1280],
+  [2325, 929],
 ]
 
 // Pies arriba-izquierda de la diagonal: el personaje va detras de la pared
