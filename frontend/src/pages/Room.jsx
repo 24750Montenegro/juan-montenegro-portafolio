@@ -13,11 +13,22 @@ import { loadPlacements, blockedByObjects, OBJECT_ASSETS } from '../game/objects
 import Character from '../components/game/Character'
 import RoomObjects from '../components/game/RoomObjects'
 import ScreenModal from '../components/game/ScreenModal'
+import RetroWindow from '../components/game/RetroWindow'
 import ProjectsScreen from '../components/game/ProjectsScreen'
 import BreakoutGame from '../components/game/BreakoutGame'
+import SkillsScreen from '../components/game/SkillsScreen'
+import AchievementsScreen from '../components/game/AchievementsScreen'
+import SocialScreen from '../components/game/SocialScreen'
 import RoomEditor from '../components/game/RoomEditor' // EDITOR (temporal)
 import roomImg from '../assets/habitación vacia.png'
 import './Room.css'
+
+// Zonas que se muestran en una ventana retro (sin marco PNG propio).
+const WINDOW_SCREENS = {
+  conocimientos: { title: 'CONOCIMIENTOS.EXE', Component: SkillsScreen },
+  logros: { title: 'LOGROS.EXE', Component: AchievementsScreen },
+  social: { title: 'SOCIAL.EXE', Component: SocialScreen },
+}
 
 // Punto inicial por defecto de los pies (si no hay portal donde aparecer)
 const DEFAULT_START = [1300, 1000]
@@ -151,11 +162,24 @@ export default function Room() {
         </div>
       )}
 
-      {/* Pantalla / modal del objeto activo */}
-      {activeModal && (
+      {/* Pantalla con marco PNG (monitor / tv) */}
+      {(activeModal === 'monitor' || activeModal === 'tv') && (
         <ScreenModal frameId={activeModal} onClose={() => setActiveModal(null)}>
           {activeModal === 'monitor' ? <ProjectsScreen /> : <BreakoutGame />}
         </ScreenModal>
+      )}
+
+      {/* Zonas en ventana retro (conocimientos / logros / social) */}
+      {WINDOW_SCREENS[activeModal] && (
+        <RetroWindow
+          title={WINDOW_SCREENS[activeModal].title}
+          onClose={() => setActiveModal(null)}
+        >
+          {(() => {
+            const Pantalla = WINDOW_SCREENS[activeModal].Component
+            return <Pantalla />
+          })()}
+        </RetroWindow>
       )}
 
       {/* ===== EDITOR (temporal) — borrar este bloque cuando ya no se use ===== */}
