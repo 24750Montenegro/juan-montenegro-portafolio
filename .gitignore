@@ -29,6 +29,3 @@ Thumbs.db
 # Configuracion de editores
 .vscode/
 .idea/
-
-# Configuracion local de herramientas de IA
-.claude/
