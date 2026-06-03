@@ -7,40 +7,55 @@
 // DEFAULT_INTERACTABLES) lo que copie el boton "Exportar interactuables".
 export const DEFAULT_INTERACTABLES = [
   {
-    id: 'monitor',
-    label: 'Proyectos',
-    screen: 'monitor',
-    pos: [1190, 462],
-    radius: 260,
+    "id": "monitor",
+    "label": "Proyectos",
+    "screen": "monitor",
+    "pos": [
+      1190,
+      462
+    ],
+    "radius": 260
   },
   {
-    id: 'tv',
-    label: 'Arcade',
-    screen: 'tv',
-    pos: [839, 1041],
-    radius: 260,
+    "id": "tv",
+    "label": "Arcade",
+    "screen": "tv",
+    "pos": [
+      839,
+      1041
+    ],
+    "radius": 260
   },
   {
-    id: 'conocimientos',
-    label: 'Conocimientos',
-    screen: 'conocimientos',
-    pos: [1700, 1100],
-    radius: 260,
+    "id": "conocimientos",
+    "label": "Conocimientos",
+    "screen": "conocimientos",
+    "pos": [
+      1834,
+      546
+    ],
+    "radius": 260
   },
   {
-    id: 'logros',
-    label: 'Logros',
-    screen: 'logros',
-    pos: [2100, 1180],
-    radius: 260,
+    "id": "logros",
+    "label": "Logros",
+    "screen": "logros",
+    "pos": [
+      2189,
+      881
+    ],
+    "radius": 225
   },
   {
-    id: 'social',
-    label: 'Social',
-    screen: 'social',
-    pos: [900, 1280],
-    radius: 260,
-  },
+    "id": "social",
+    "label": "Social",
+    "screen": "social",
+    "pos": [
+      2546,
+      922
+    ],
+    "radius": 290
+  }
 ]
 
 const STORAGE_KEY = 'room.interactables.v1'

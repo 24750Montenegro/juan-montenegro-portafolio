@@ -97,105 +97,170 @@ export function defaultCollision(assetKey, scale) {
 // quedan en el codigo y siguen funcionando cuando se elimine el editor.
 export const DEFAULT_PLACEMENTS = [
   {
-    id: 'escritorio-y0r1h',
-    asset: 'escritorio',
-    x: 1125,
-    y: 592,
-    scale: 0.224,
-    flip: false,
-    solid: true,
-    collision: { w: 500, h: 300, dx: 0, dy: -180 },
+    "id": "escritorio-y0r1h",
+    "asset": "escritorio",
+    "x": 1125,
+    "y": 592,
+    "scale": 0.224,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 500,
+      "h": 300,
+      "dx": 0,
+      "dy": -180
+    }
   },
   {
-    id: 'beanbag-4dm6l',
-    asset: 'beanbag',
-    x: 1037,
-    y: 1264,
-    scale: 0.15,
-    flip: false,
-    solid: true,
-    collision: { w: 263, h: 120, dx: 0, dy: -60 },
+    "id": "beanbag-4dm6l",
+    "asset": "beanbag",
+    "x": 1122,
+    "y": 1177,
+    "scale": 0.15,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 263,
+      "h": 120,
+      "dx": 0,
+      "dy": -60
+    }
   },
   {
-    id: 'gamingChair-wbd1z',
-    asset: 'gamingChair',
-    x: 1392,
-    y: 777,
-    scale: 0.206,
-    flip: false,
-    solid: true,
-    collision: { w: 120, h: 120, dx: 0, dy: -60 },
+    "id": "gamingChair-wbd1z",
+    "asset": "gamingChair",
+    "x": 1392,
+    "y": 777,
+    "scale": 0.206,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 120,
+      "h": 120,
+      "dx": 0,
+      "dy": -60
+    }
   },
   {
-    id: 'portal-3ko2f',
-    asset: 'portal',
-    x: 2006,
-    y: 1479,
-    scale: 0.565,
-    flip: false,
-    solid: true,
-    collision: { w: 0, h: 0, dx: 0, dy: -60 },
+    "id": "portal-3ko2f",
+    "asset": "portal",
+    "x": 2006,
+    "y": 1479,
+    "scale": 0.565,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 0,
+      "h": 0,
+      "dx": 0,
+      "dy": -60
+    }
   },
   {
-    id: 'medalla-iiuhm',
-    asset: 'medalla',
-    x: 2173,
-    y: 1014,
-    scale: 0.44,
-    flip: false,
-    solid: true,
-    collision: { w: 149, h: 120, dx: 0, dy: -60 },
+    "id": "medalla-iiuhm",
+    "asset": "medalla",
+    "x": 2173,
+    "y": 1014,
+    "scale": 0.44,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 149,
+      "h": 120,
+      "dx": 0,
+      "dy": -60
+    }
   },
   {
-    id: 'nintendo-xi8eo',
-    asset: 'nintendo',
-    x: 648,
-    y: 1100,
-    scale: 0.3,
-    flip: false,
-    solid: true,
-    collision: { w: 600, h: 600, dx: -36, dy: -300 },
+    "id": "nintendo-xi8eo",
+    "asset": "nintendo",
+    "x": 752,
+    "y": 1022,
+    "scale": 0.3,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 600,
+      "h": 600,
+      "dx": -36,
+      "dy": -300
+    }
   },
   {
-    id: 'tablero-50hxw',
-    asset: 'tablero',
-    x: 2459,
-    y: 1102,
-    scale: 0.165,
-    flip: false,
-    solid: true,
-    collision: { w: 180, h: 190, dx: -75, dy: -151 },
+    "id": "tablero-50hxw",
+    "asset": "tablero",
+    "x": 2459,
+    "y": 1102,
+    "scale": 0.165,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 180,
+      "h": 190,
+      "dx": -75,
+      "dy": -151
+    }
   },
   {
-    id: 'repisa-9ydox',
-    asset: 'repisa',
-    x: 1806,
-    y: 638,
-    scale: 0.242,
-    flip: false,
-    solid: true,
-    collision: { w: 362, h: 120, dx: 0, dy: -190 },
+    "id": "repisa-9ydox",
+    "asset": "repisa",
+    "x": 1806,
+    "y": 638,
+    "scale": 0.242,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 362,
+      "h": 120,
+      "dx": 0,
+      "dy": -190
+    }
   },
   {
-    id: 'plantita-22i82',
-    asset: 'plantita',
-    x: 251,
-    y: 1117,
-    scale: 0.132,
-    flip: false,
-    solid: true,
-    collision: { w: 148, h: 120, dx: 0, dy: -60 },
+    "id": "plantita-22i82",
+    "asset": "plantita",
+    "x": 909,
+    "y": 1462,
+    "scale": 0.132,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 148,
+      "h": 120,
+      "dx": 0,
+      "dy": -60
+    }
   },
   {
-    id: 'plantita-oqk4e',
-    asset: 'plantita',
-    x: 1977,
-    y: 1043,
-    scale: 0.132,
-    flip: false,
-    solid: true,
-    collision: { w: 148, h: 120, dx: 0, dy: -60 },
+    "id": "plantita-oqk4e",
+    "asset": "plantita",
+    "x": 1977,
+    "y": 1043,
+    "scale": 0.132,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 148,
+      "h": 120,
+      "dx": 0,
+      "dy": -60
+    }
   },
+  {
+    "id": "cama-iyy0n",
+    "asset": "cama",
+    "x": 378,
+    "y": 1240,
+    "scale": 0.368,
+    "flip": false,
+    "solid": true,
+    "collision": {
+      "w": 400,
+      "h": 300,
+      "dx": 65,
+      "dy": -140
+    }
+  }
 ]
 
 const STORAGE_KEY = 'room.placements.v1'
