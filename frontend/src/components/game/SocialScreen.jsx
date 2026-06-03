@@ -23,7 +23,7 @@ function formatearFecha(iso) {
 export default function SocialScreen() {
   const { resenas, cargando, error, recargar } = useReviews()
   const { autenticado } = useAuth()
-  const [tab, setTab] = useState('resenas')
+  const [tab, setTab] = useState('contacto')
   const [form, setForm] = useState(FORM_INICIAL)
   const [calificacion, setCalificacion] = useState(5)
   const [enviando, setEnviando] = useState(false)
@@ -65,20 +65,20 @@ export default function SocialScreen() {
         <button
           type="button"
           role="tab"
-          aria-selected={tab === 'resenas'}
-          className={`social-tab${tab === 'resenas' ? ' is-active' : ''}`}
-          onClick={() => setTab('resenas')}
-        >
-          RESEÑAS
-        </button>
-        <button
-          type="button"
-          role="tab"
           aria-selected={tab === 'contacto'}
           className={`social-tab${tab === 'contacto' ? ' is-active' : ''}`}
           onClick={() => setTab('contacto')}
         >
           CONTACTO
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tab === 'resenas'}
+          className={`social-tab${tab === 'resenas' ? ' is-active' : ''}`}
+          onClick={() => setTab('resenas')}
+        >
+          RESEÑAS
         </button>
       </div>
 
