@@ -14,6 +14,7 @@ import portalSheet from '../assets/portal1-sheet.png'
 import nintendo from '../assets/nintendo1.png'
 import plantita from '../assets/plantita.png'
 import repisa from '../assets/repisa.png'
+import cama from '../assets/cama.png'
 
 // kind 'static' = imagen fija. kind 'sprite' = spritesheet horizontal animada.
 // native: tamano nativo en px (para sprites, tamano de UN frame).
@@ -31,6 +32,7 @@ export const OBJECT_ASSETS = {
   egg:         { label: 'Huevo',       src: egg,         kind: 'static', native: { w: 709,  h: 828  } },
   plantita:    { label: 'Plantita',    src: plantita,    kind: 'static', native: { w: 1491, h: 1988 } },
   repisa:      { label: 'Repisa',      src: repisa,      kind: 'static', native: { w: 2816, h: 1536 } },
+  cama:        { label: 'Cama',        src: cama,        kind: 'static', native: { w: 1387, h: 1303 } },
   nintendo:    { label: 'Nintendo',    src: nintendo,    kind: 'static', native: { w: 2136, h: 2016 }, fullCollision: true },
   portal: {
     label: 'Portal',
