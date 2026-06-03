@@ -1,0 +1,164 @@
+/* ===== Tema libro/hojas para la zona de conocimientos ===== */
+
+.book {
+  padding: 1.2em 1.4em 1.8em;
+}
+
+/* Capitulo (categoria) como encabezado de pagina */
+.book-chapter {
+  margin-bottom: 1.6em;
+}
+.book-chapter__title {
+  margin: 0 0 0.8em;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(10px, 1.6vw, 15px);
+  color: #553d22;
+  text-align: center;
+  padding-bottom: 0.5em;
+  border-bottom: 3px double #6b4f2e;
+}
+
+.book-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1em;
+}
+
+/* Entrada (tecnologia) como renglon de la pagina */
+.book-entry {
+  display: flex;
+  gap: 0.9em;
+  padding-bottom: 0.9em;
+  border-bottom: 1px dashed #b9a06f;
+}
+
+.book-entry__logo {
+  flex: none;
+  width: clamp(48px, 12%, 72px);
+  height: clamp(48px, 12%, 72px);
+  display: grid;
+  place-items: center;
+  background: #fbf4df;
+  border: 3px solid #6b4f2e;
+  box-shadow: 2px 2px 0 #c8b483;
+}
+.book-entry__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.book-entry__initial {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(14px, 3vw, 24px);
+  color: #6b4f2e;
+}
+
+.book-entry__main {
+  flex: 1;
+  min-width: 0;
+}
+.book-entry__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6em;
+  margin-bottom: 0.2em;
+}
+.book-entry__name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(9px, 1.5vw, 13px);
+  color: #4a361f;
+}
+.book-entry__pct {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 1.2vw, 11px);
+  color: #2a7d6f;
+}
+.book-entry__detail {
+  margin: 0 0 0.5em;
+  font-size: clamp(16px, 2.2vw, 22px);
+  line-height: 1.2;
+  color: #5a4326;
+}
+
+/* Barra de progreso como tinta sobre papel */
+.book-bar {
+  height: 14px;
+  background: #e0cfa3;
+  border: 2px solid #6b4f2e;
+  padding: 2px;
+  overflow: hidden;
+}
+.book-bar__fill {
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    #2a7d6f 0,
+    #2a7d6f 7px,
+    #226257 7px,
+    #226257 11px
+  );
+  transition: width 600ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.book-entry__admin {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+/* ===== Ajustes de controles genericos sobre el papel ===== */
+.retro-window--book .zone-msg {
+  color: #6b4f2e;
+  font-size: clamp(16px, 2.4vw, 24px);
+}
+.retro-window--book .zone-msg--err {
+  color: #a33322;
+}
+.retro-window--book .zone-admin {
+  border-bottom-color: #c8b483;
+}
+.retro-window--book .zone-admin__tag {
+  color: #6b4f2e;
+}
+.retro-window--book .zone-form {
+  background: rgba(107, 79, 46, 0.08);
+  border-color: #c8b483;
+  border-left-color: #6b4f2e;
+}
+.retro-window--book .zone-field > span {
+  color: #6b4f2e;
+}
+.retro-window--book .zone-input,
+.retro-window--book .zone-textarea {
+  background: #fbf4df;
+  color: #4a361f;
+  border-color: #c8b483;
+}
+.retro-window--book .zone-input:focus,
+.retro-window--book .zone-textarea:focus {
+  border-color: #6b4f2e;
+}
+.retro-window--book .zone-btn {
+  background: #6b4f2e;
+  color: #efe3c6;
+}
+.retro-window--book .zone-btn:hover {
+  background: #8a5a2a;
+}
+.retro-window--book .zone-btn--ghost {
+  background: transparent;
+  color: #6b4f2e;
+  border-color: #6b4f2e;
+}
+.retro-window--book .zone-btn--ghost:hover {
+  background: #6b4f2e;
+  color: #efe3c6;
+}
+.retro-window--book .zone-btn--danger {
+  background: #a33322;
+  color: #fff;
+}

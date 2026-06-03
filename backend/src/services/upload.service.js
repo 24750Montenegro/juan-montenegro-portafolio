@@ -3,11 +3,11 @@ import { cloudinary } from '../config/cloudinary.js';
 
 const CARPETA = 'portafolio/proyectos';
 
-// Sube un buffer de imagen y devuelve su url segura e id publico
-export const subirImagen = (buffer) =>
+// Sube un buffer de imagen a la carpeta dada y devuelve url segura e id publico
+export const subirImagen = (buffer, carpeta = CARPETA) =>
   new Promise((resolve, reject) => {
     const flujo = cloudinary.uploader.upload_stream(
-      { folder: CARPETA, resource_type: 'image' },
+      { folder: carpeta, resource_type: 'image' },
       (error, resultado) => {
         if (error) return reject(error);
         resolve({ url: resultado.secure_url, id: resultado.public_id });

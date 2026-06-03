@@ -1,0 +1,160 @@
+/* Pestanas de la zona social */
+.social-tabs {
+  display: flex;
+  gap: 0.4em;
+  margin-bottom: 1.1em;
+  border-bottom: 2px solid #2b2b50;
+}
+.social-tab {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 1.3vw, 12px);
+  color: #7a7ab0;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.6em 0.9em;
+  margin-bottom: -2px;
+  cursor: pointer;
+}
+.social-tab:hover {
+  color: #cfe9ff;
+}
+.social-tab.is-active {
+  color: #2cf6c2;
+  border-bottom-color: #2cf6c2;
+}
+
+/* Pestana de contacto */
+.contact__title {
+  margin: 1em 0 0.6em;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(9px, 1.5vw, 13px);
+  color: #fffb96;
+  border-left: 4px solid #ff2e88;
+  padding-left: 0.6em;
+}
+
+.contact__pdf {
+  display: grid;
+  gap: 0.6em;
+  justify-items: start;
+}
+.contact__viewer {
+  width: 100%;
+  height: clamp(300px, 55vh, 520px);
+  background: #fff;
+  border: 2px solid #2b2b50;
+}
+
+.contact__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1em;
+}
+.contact__icon {
+  width: clamp(36px, 7vw, 48px);
+  height: clamp(36px, 7vw, 48px);
+  image-rendering: pixelated;
+  transition: transform 120ms ease;
+}
+.contact__icon:hover {
+  transform: scale(1.15);
+}
+
+.social-form {
+  border-left-color: #ff2e88;
+}
+
+.social-form__lead {
+  margin: 0;
+  font-size: clamp(15px, 2.2vw, 22px);
+  color: #2cf6c2;
+}
+
+/* Selector de estrellas */
+.social-stars {
+  display: flex;
+  gap: 0.15em;
+}
+
+.social-star {
+  font-size: clamp(22px, 4vw, 34px);
+  line-height: 1;
+  color: #3a3a5c;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 100ms ease, color 100ms ease;
+}
+.social-star:hover {
+  transform: scale(1.15);
+}
+.social-star.is-on {
+  color: #fffb96;
+  text-shadow: 0 0 8px rgba(255, 251, 150, 0.7);
+}
+
+.social-ok {
+  margin: 0;
+  color: #2cf6c2;
+  font-size: clamp(15px, 2vw, 20px);
+}
+
+/* Listado de reseñas */
+.social-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9em;
+}
+
+.social-card {
+  padding: 0.8em 0.9em;
+  background: rgba(43, 43, 80, 0.35);
+  border: 2px solid #2b2b50;
+  border-left: 4px solid #ff2e88;
+}
+
+.social-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.6em;
+  margin-bottom: 0.3em;
+}
+
+.social-card__name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 1.3vw, 12px);
+  color: #fffb96;
+}
+
+.social-card__stars {
+  flex: none;
+  font-size: clamp(14px, 2vw, 20px);
+  color: #fffb96;
+  letter-spacing: 1px;
+}
+
+.social-card__text {
+  margin: 0 0 0.5em;
+  font-size: clamp(15px, 2vw, 21px);
+  line-height: 1.2;
+  color: #cfe9ff;
+}
+
+.social-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.social-card__date {
+  font-size: clamp(13px, 1.6vw, 17px);
+  color: #7a7ab0;
+}

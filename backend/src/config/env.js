@@ -15,6 +15,10 @@ const esquemaEnv = z.object({
   CLOUDINARY_CLOUD_NAME: z.string().min(1, 'CLOUDINARY_CLOUD_NAME es obligatoria'),
   CLOUDINARY_API_KEY: z.string().min(1, 'CLOUDINARY_API_KEY es obligatoria'),
   CLOUDINARY_API_SECRET: z.string().min(1, 'CLOUDINARY_API_SECRET es obligatoria'),
+  // Supabase Storage para el PDF del portafolio (opcional hasta usarlo)
+  SUPABASE_URL: z.string().url().optional(),
+  SUPABASE_SERVICE_KEY: z.string().optional(),
+  SUPABASE_BUCKET: z.string().default('portafolio'),
 });
 
 const resultado = esquemaEnv.safeParse(process.env);

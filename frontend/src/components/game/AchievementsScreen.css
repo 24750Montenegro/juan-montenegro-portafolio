@@ -1,0 +1,145 @@
+/* ===== Tema vitrina/medalla para la zona de logros ===== */
+
+.medal {
+  padding: 1.4em 1.4em 1.8em;
+}
+
+.ach-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.6em 1.2em;
+}
+
+/* Cada logro como una placa en exhibicion con medallon colgante */
+.ach-card {
+  position: relative;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.4em 1.1em 1.1em;
+  background: linear-gradient(180deg, #241c3c, #1a1430);
+  border: 2px solid #d4af37;
+  box-shadow: inset 0 0 0 2px #0c0a16, 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Medallon dorado colgando del borde superior */
+.ach-card::before {
+  content: '\2605';
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  color: #3a2a00;
+  background: radial-gradient(circle at 35% 30%, #ffe082, #d4af37 70%);
+  border: 2px solid #fff3c4;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+}
+
+.ach-card__img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  background: #fff;
+  border: 2px solid #d4af37;
+  margin-bottom: 0.7em;
+}
+
+.ach-card__body {
+  display: grid;
+  gap: 0.4em;
+  width: 100%;
+}
+
+.ach-card__title {
+  margin: 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(10px, 1.6vw, 14px);
+  color: #ffd86b;
+  line-height: 1.5;
+}
+
+.ach-card__date {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1vw, 10px);
+  color: #c9a44a;
+  letter-spacing: 1px;
+}
+
+.ach-card__desc {
+  margin: 0;
+  font-size: clamp(16px, 2.2vw, 22px);
+  line-height: 1.2;
+  color: #d8ccf0;
+}
+
+.ach-card__admin {
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+  margin-top: 0.4em;
+}
+
+/* ===== Ajustes de controles genericos en la vitrina ===== */
+.retro-window--medal .zone-msg {
+  color: #ffd86b;
+  font-size: clamp(16px, 2.4vw, 24px);
+}
+.retro-window--medal .zone-msg--err {
+  color: #ff8a7a;
+}
+.retro-window--medal .zone-admin {
+  border-bottom-color: #4a3a6a;
+}
+.retro-window--medal .zone-admin__tag {
+  color: #ffd86b;
+}
+.retro-window--medal .zone-form {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: #4a3a6a;
+  border-left-color: #d4af37;
+}
+.retro-window--medal .zone-field > span {
+  color: #c9a44a;
+}
+.retro-window--medal .zone-input,
+.retro-window--medal .zone-textarea {
+  background: #0f0c1a;
+  color: #e9dffb;
+  border-color: #4a3a6a;
+}
+.retro-window--medal .zone-input:focus,
+.retro-window--medal .zone-textarea:focus {
+  border-color: #d4af37;
+}
+.retro-window--medal .zone-btn {
+  background: #d4af37;
+  color: #2b210a;
+}
+.retro-window--medal .zone-btn:hover {
+  background: #ffd86b;
+}
+.retro-window--medal .zone-btn--ghost {
+  background: transparent;
+  color: #ffd86b;
+  border-color: #d4af37;
+}
+.retro-window--medal .zone-btn--ghost:hover {
+  background: #d4af37;
+  color: #2b210a;
+}
+.retro-window--medal .zone-btn--danger {
+  background: #a33322;
+  color: #fff;
+}
