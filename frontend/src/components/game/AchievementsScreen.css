@@ -1,55 +1,141 @@
+/* ===== Tema diploma/certificado para la zona de logros ===== */
+
+.diploma {
+  padding: 1.2em 1.4em 1.8em;
+}
+
 .ach-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 0.9em;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2em;
 }
 
+/* Cada logro como un certificado enmarcado */
 .ach-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  background: rgba(43, 43, 80, 0.35);
-  border: 2px solid #2b2b50;
-  border-top: 4px solid #fffb96;
+  align-items: center;
+  text-align: center;
+  padding: 1em 1.1em 1.1em;
+  background: #fbf2d8;
+  border: 3px solid #b8932f;
+  /* Doble marco dorado */
+  box-shadow: inset 0 0 0 3px #fbf2d8, inset 0 0 0 5px #b8932f;
 }
+
+/* Florituras en las esquinas */
+.ach-card::before,
+.ach-card::after {
+  content: '\2756';
+  position: absolute;
+  color: #b8932f;
+  font-size: 14px;
+  line-height: 1;
+}
+.ach-card::before { top: 8px; left: 10px; }
+.ach-card::after { top: 8px; right: 10px; }
 
 .ach-card__img {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-bottom: 2px solid #12122a;
+  max-height: 160px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  border: 2px solid #b8932f;
+  background: #fff;
+  margin-bottom: 0.7em;
 }
 
 .ach-card__body {
-  padding: 0.7em 0.8em 0.8em;
   display: grid;
-  gap: 0.35em;
+  gap: 0.4em;
+  width: 100%;
 }
 
 .ach-card__title {
   margin: 0;
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(9px, 1.4vw, 13px);
-  color: #fffb96;
+  font-size: clamp(10px, 1.6vw, 14px);
+  color: #7a2e2e;
   line-height: 1.5;
+  padding-bottom: 0.4em;
+  border-bottom: 2px solid #d8c178;
 }
 
 .ach-card__date {
-  font-size: clamp(13px, 1.8vw, 18px);
-  color: #2cf6c2;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1vw, 10px);
+  color: #b8932f;
+  letter-spacing: 1px;
 }
 
 .ach-card__desc {
   margin: 0;
-  font-size: clamp(15px, 2vw, 20px);
-  line-height: 1.15;
-  color: #cfe9ff;
+  font-size: clamp(16px, 2.2vw, 22px);
+  line-height: 1.2;
+  color: #5a4326;
 }
 
 .ach-card__admin {
   display: flex;
+  justify-content: center;
   gap: 0.5em;
-  margin-top: 0.3em;
+  margin-top: 0.4em;
+}
+
+/* ===== Ajustes de controles genericos sobre el pergamino ===== */
+.retro-window--diploma .zone-msg {
+  color: #7a2e2e;
+  font-size: clamp(16px, 2.4vw, 24px);
+}
+.retro-window--diploma .zone-msg--err {
+  color: #a33322;
+}
+.retro-window--diploma .zone-admin {
+  border-bottom-color: #d8c178;
+}
+.retro-window--diploma .zone-admin__tag {
+  color: #7a2e2e;
+}
+.retro-window--diploma .zone-form {
+  background: rgba(184, 147, 47, 0.1);
+  border-color: #d8c178;
+  border-left-color: #b8932f;
+}
+.retro-window--diploma .zone-field > span {
+  color: #7a2e2e;
+}
+.retro-window--diploma .zone-input,
+.retro-window--diploma .zone-textarea {
+  background: #fff;
+  color: #4a3a1f;
+  border-color: #d8c178;
+}
+.retro-window--diploma .zone-input:focus,
+.retro-window--diploma .zone-textarea:focus {
+  border-color: #b8932f;
+}
+.retro-window--diploma .zone-btn {
+  background: #b8932f;
+  color: #2b210a;
+}
+.retro-window--diploma .zone-btn:hover {
+  background: #7a2e2e;
+  color: #fff;
+}
+.retro-window--diploma .zone-btn--ghost {
+  background: transparent;
+  color: #7a2e2e;
+  border-color: #7a2e2e;
+}
+.retro-window--diploma .zone-btn--ghost:hover {
+  background: #7a2e2e;
+  color: #fff;
+}
+.retro-window--diploma .zone-btn--danger {
+  background: #a33322;
+  color: #fff;
 }

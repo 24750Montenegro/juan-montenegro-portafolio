@@ -59,7 +59,7 @@ export default function AchievementsScreen() {
   }
 
   return (
-    <div className="zone">
+    <div className="zone diploma">
       {autenticado && (
         <div className="zone-admin">
           <span className="zone-admin__tag">ADMIN</span>
@@ -99,17 +99,17 @@ export default function AchievementsScreen() {
         </form>
       )}
 
-      {cargando && <p className="zone-msg">&gt; cargando logros<span className="zone-caret">_</span></p>}
+      {cargando && <p className="zone-msg">cargando logros...</p>}
 
       {error && (
         <div className="zone-msg zone-msg--err">
-          <p>&gt; ERROR: {error}</p>
+          <p>ERROR: {error}</p>
           <button type="button" className="zone-btn" onClick={recargar}>REINTENTAR</button>
         </div>
       )}
 
       {!cargando && !error && logros.length === 0 && (
-        <p className="zone-msg">&gt; aun no hay logros publicados.</p>
+        <p className="zone-msg">Aun no hay logros publicados.</p>
       )}
 
       {!cargando && !error && logros.length > 0 && (
