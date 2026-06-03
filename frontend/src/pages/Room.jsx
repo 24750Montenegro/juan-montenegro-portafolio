@@ -20,6 +20,7 @@ import SkillsScreen from '../components/game/SkillsScreen'
 import AchievementsScreen from '../components/game/AchievementsScreen'
 import SocialScreen from '../components/game/SocialScreen'
 import WelcomeModal from '../components/game/WelcomeModal'
+import EditorReward from '../components/game/EditorReward'
 import RoomEditor from '../components/game/RoomEditor' // EDITOR (temporal)
 import roomImg from '../assets/habitación vacia.png'
 import './Room.css'
@@ -84,6 +85,8 @@ export default function Room() {
   const [editorOpen, setEditorOpen] = useState(false)
   // El boton del editor solo aparece tras descubrir el codigo Konami.
   const [editorUnlocked, setEditorUnlocked] = useState(false)
+  // Globo de recompensa que aparece al desbloquear (se cierra con clic).
+  const [rewardOpen, setRewardOpen] = useState(false)
   // Bienvenida: aparece una vez por sesion del navegador.
   const [welcomeOpen, setWelcomeOpen] = useState(() => {
     try {
@@ -112,7 +115,10 @@ export default function Room() {
       const coincide = KONAMI_SECUENCIAS.some(
         (seq) => buffer.length === KONAMI_LEN && seq.every((k, i) => k === buffer[i]),
       )
-      if (coincide) setEditorUnlocked(true)
+      if (coincide) {
+        setEditorUnlocked(true)
+        setRewardOpen(true)
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -235,6 +241,7 @@ export default function Room() {
 
       {/* ===== EDITOR (temporal) — borrar este bloque cuando ya no se use ===== */}
       {/* El boton solo aparece tras descubrir el codigo Konami. */}
+      {editorUnlocked && rewardOpen && <EditorReward onClose={() => setRewardOpen(false)} />}
       {editorUnlocked && (
         <button
           type="button"
