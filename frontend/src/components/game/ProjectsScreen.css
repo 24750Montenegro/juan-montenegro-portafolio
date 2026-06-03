@@ -40,6 +40,22 @@
   color: #7a7ab0;
 }
 
+/* Boton de acceso de administrador en la barra de titulo */
+.pscreen__admin {
+  margin-left: 0.6em;
+  font-family: 'Press Start 2P', monospace;
+  font-size: inherit;
+  color: #0a0a16;
+  background: #fffb96;
+  border: none;
+  padding: 0.4em 0.6em;
+  cursor: pointer;
+}
+.pscreen__admin:hover {
+  background: #ff2e88;
+  color: #fff;
+}
+
 /* Cuerpo desplazable */
 .pscreen__body {
   flex: 1;
@@ -150,16 +166,49 @@
 
 .pscreen__actions {
   display: flex;
-  gap: 0.9em;
+  align-items: center;
+  gap: 0.7em;
   font-size: clamp(14px, 2vw, 20px);
 }
 .pscreen__actions a {
-  color: #7ad7ff;
-  text-decoration: none;
+  display: inline-flex;
+  line-height: 0;
 }
-.pscreen__actions a:hover {
-  color: #ff2e88;
-  text-shadow: 0 0 6px #ff2e88;
+
+/* Iconos pixelart de github/enlace por proyecto */
+.pscreen__icon {
+  width: clamp(22px, 4vw, 30px);
+  height: clamp(22px, 4vw, 30px);
+  image-rendering: pixelated;
+  transition: transform 120ms ease;
+}
+.pscreen__icon:hover {
+  transform: scale(1.15);
+}
+
+/* Controles de admin por tarjeta */
+.pscreen__card-admin {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.6em;
+}
+
+/* Formulario de login dentro del monitor */
+.pscreen__login {
+  border-left-color: #2cf6c2;
+}
+.pscreen__login-lead {
+  margin: 0;
+  color: #2cf6c2;
+  font-size: clamp(15px, 2.2vw, 22px);
+}
+
+.pscreen__check {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: clamp(15px, 2vw, 20px);
+  color: #cfe9ff;
 }
 
 .pscreen__btn {
