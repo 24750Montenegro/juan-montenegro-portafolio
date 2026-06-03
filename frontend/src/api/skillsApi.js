@@ -5,13 +5,13 @@ import { cliente } from './axiosClient.js';
 export const apiListarConocimientos = () =>
   cliente.get('/conocimientos').then((respuesta) => respuesta.data);
 
-// Crea un conocimiento
-export const apiCrearConocimiento = (datos) =>
-  cliente.post('/conocimientos', datos).then((respuesta) => respuesta.data);
+// Crea un conocimiento enviando un FormData (incluye el logo)
+export const apiCrearConocimiento = (formData) =>
+  cliente.post('/conocimientos', formData).then((respuesta) => respuesta.data);
 
 // Actualiza un conocimiento existente
-export const apiActualizarConocimiento = (id, datos) =>
-  cliente.put(`/conocimientos/${id}`, datos).then((respuesta) => respuesta.data);
+export const apiActualizarConocimiento = (id, formData) =>
+  cliente.put(`/conocimientos/${id}`, formData).then((respuesta) => respuesta.data);
 
 // Elimina un conocimiento por id
 export const apiEliminarConocimiento = (id) => cliente.delete(`/conocimientos/${id}`);
