@@ -13,7 +13,7 @@ export const useReviews = () => {
     setError(null);
     apiListarResenas()
       .then(setResenas)
-      .catch(() => setError('No se pudieron cargar las resenas'))
+      .catch(() => setError('No se pudieron cargar las reseñas'))
       .finally(() => setCargando(false));
   }, []);
 

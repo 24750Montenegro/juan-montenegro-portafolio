@@ -44,14 +44,14 @@ export default function SocialScreen() {
       setExito(true)
       recargar()
     } catch {
-      setErrForm('No se pudo enviar la resena')
+      setErrForm('No se pudo enviar la reseña')
     } finally {
       setEnviando(false)
     }
   }
 
   const eliminar = async (id) => {
-    if (!window.confirm('Eliminar esta resena?')) return
+    if (!window.confirm('Eliminar esta reseña?')) return
     await apiEliminarResena(id)
     recargar()
   }
@@ -86,7 +86,7 @@ export default function SocialScreen() {
           <textarea className="zone-textarea" name="comentario" value={form.comentario} onChange={cambiar} required rows={3} maxLength={1000} />
         </label>
         {errForm && <p className="zone-error">{errForm}</p>}
-        {exito && <p className="social-ok">&gt; gracias por tu resena!</p>}
+        {exito && <p className="social-ok">&gt; gracias por tu reseña!</p>}
         <div className="zone-form__actions">
           <button type="submit" className="zone-btn" disabled={enviando}>
             {enviando ? 'ENVIANDO...' : 'ENVIAR'}
@@ -94,7 +94,7 @@ export default function SocialScreen() {
         </div>
       </form>
 
-      {cargando && <p className="zone-msg">&gt; cargando resenas<span className="zone-caret">_</span></p>}
+      {cargando && <p className="zone-msg">&gt; cargando reseñas<span className="zone-caret">_</span></p>}
 
       {error && (
         <div className="zone-msg zone-msg--err">
@@ -104,7 +104,7 @@ export default function SocialScreen() {
       )}
 
       {!cargando && !error && resenas.length === 0 && (
-        <p className="zone-msg">&gt; se el primero en dejar una resena.</p>
+        <p className="zone-msg">&gt; se el primero en dejar una reseña.</p>
       )}
 
       {!cargando && !error && resenas.length > 0 && (
