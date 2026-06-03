@@ -27,7 +27,7 @@ import './Room.css'
 // variant cambia el estilo: libro (conocimientos), diploma (logros) o terminal.
 const WINDOW_SCREENS = {
   conocimientos: { title: 'Mis Conocimientos', variant: 'book', Component: SkillsScreen },
-  logros: { title: 'Mis Logros', variant: 'diploma', Component: AchievementsScreen },
+  logros: { title: 'Mis Logros', variant: 'medal', Component: AchievementsScreen },
   social: { title: 'SOCIAL.EXE', variant: 'terminal', Component: SocialScreen },
 }
 

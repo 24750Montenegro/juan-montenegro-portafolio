@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import './RetroWindow.css'
 
 // Ventana modal con estetica retro (sin marco PNG). El `variant` cambia el
-// aspecto: 'terminal' (pantalla), 'book' (hojas/libro) o 'diploma'. Dibuja
+// aspecto: 'terminal' (pantalla), 'book' (hojas/libro) o 'medal' (vitrina). Dibuja
 // cabecera, boton de cierre y textura, y muestra `children` en un cuerpo
 // desplazable. Se usa para las zonas que no tienen marco de pantalla propio.
 export default function RetroWindow({

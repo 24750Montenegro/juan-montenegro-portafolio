@@ -59,7 +59,7 @@ export default function AchievementsScreen() {
   }
 
   return (
-    <div className="zone diploma">
+    <div className="zone medal">
       {autenticado && (
         <div className="zone-admin">
           <span className="zone-admin__tag">ADMIN</span>

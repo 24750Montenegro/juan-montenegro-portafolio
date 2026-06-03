@@ -1,7 +1,7 @@
-/* ===== Tema diploma/certificado para la zona de logros ===== */
+/* ===== Tema vitrina/medalla para la zona de logros ===== */
 
-.diploma {
-  padding: 1.2em 1.4em 1.8em;
+.medal {
+  padding: 1.4em 1.4em 1.8em;
 }
 
 .ach-list {
@@ -9,43 +9,50 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.2em;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.6em 1.2em;
 }
 
-/* Cada logro como un certificado enmarcado */
+/* Cada logro como una placa en exhibicion con medallon colgante */
 .ach-card {
   position: relative;
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 1em 1.1em 1.1em;
-  background: #fbf2d8;
-  border: 3px solid #b8932f;
-  /* Doble marco dorado */
-  box-shadow: inset 0 0 0 3px #fbf2d8, inset 0 0 0 5px #b8932f;
+  padding: 1.4em 1.1em 1.1em;
+  background: linear-gradient(180deg, #241c3c, #1a1430);
+  border: 2px solid #d4af37;
+  box-shadow: inset 0 0 0 2px #0c0a16, 0 6px 16px rgba(0, 0, 0, 0.5);
 }
 
-/* Florituras en las esquinas */
-.ach-card::before,
-.ach-card::after {
-  content: '\2756';
+/* Medallon dorado colgando del borde superior */
+.ach-card::before {
+  content: '\2605';
   position: absolute;
-  color: #b8932f;
-  font-size: 14px;
-  line-height: 1;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  color: #3a2a00;
+  background: radial-gradient(circle at 35% 30%, #ffe082, #d4af37 70%);
+  border: 2px solid #fff3c4;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
 }
-.ach-card::before { top: 8px; left: 10px; }
-.ach-card::after { top: 8px; right: 10px; }
 
 .ach-card__img {
   width: 100%;
-  max-height: 160px;
+  max-height: 150px;
   object-fit: contain;
   image-rendering: pixelated;
-  border: 2px solid #b8932f;
   background: #fff;
+  border: 2px solid #d4af37;
   margin-bottom: 0.7em;
 }
 
@@ -59,16 +66,14 @@
   margin: 0;
   font-family: 'Press Start 2P', monospace;
   font-size: clamp(10px, 1.6vw, 14px);
-  color: #7a2e2e;
+  color: #ffd86b;
   line-height: 1.5;
-  padding-bottom: 0.4em;
-  border-bottom: 2px solid #d8c178;
 }
 
 .ach-card__date {
   font-family: 'Press Start 2P', monospace;
   font-size: clamp(7px, 1vw, 10px);
-  color: #b8932f;
+  color: #c9a44a;
   letter-spacing: 1px;
 }
 
@@ -76,7 +81,7 @@
   margin: 0;
   font-size: clamp(16px, 2.2vw, 22px);
   line-height: 1.2;
-  color: #5a4326;
+  color: #d8ccf0;
 }
 
 .ach-card__admin {
@@ -86,56 +91,55 @@
   margin-top: 0.4em;
 }
 
-/* ===== Ajustes de controles genericos sobre el pergamino ===== */
-.retro-window--diploma .zone-msg {
-  color: #7a2e2e;
+/* ===== Ajustes de controles genericos en la vitrina ===== */
+.retro-window--medal .zone-msg {
+  color: #ffd86b;
   font-size: clamp(16px, 2.4vw, 24px);
 }
-.retro-window--diploma .zone-msg--err {
-  color: #a33322;
+.retro-window--medal .zone-msg--err {
+  color: #ff8a7a;
 }
-.retro-window--diploma .zone-admin {
-  border-bottom-color: #d8c178;
+.retro-window--medal .zone-admin {
+  border-bottom-color: #4a3a6a;
 }
-.retro-window--diploma .zone-admin__tag {
-  color: #7a2e2e;
+.retro-window--medal .zone-admin__tag {
+  color: #ffd86b;
 }
-.retro-window--diploma .zone-form {
-  background: rgba(184, 147, 47, 0.1);
-  border-color: #d8c178;
-  border-left-color: #b8932f;
+.retro-window--medal .zone-form {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: #4a3a6a;
+  border-left-color: #d4af37;
 }
-.retro-window--diploma .zone-field > span {
-  color: #7a2e2e;
+.retro-window--medal .zone-field > span {
+  color: #c9a44a;
 }
-.retro-window--diploma .zone-input,
-.retro-window--diploma .zone-textarea {
-  background: #fff;
-  color: #4a3a1f;
-  border-color: #d8c178;
+.retro-window--medal .zone-input,
+.retro-window--medal .zone-textarea {
+  background: #0f0c1a;
+  color: #e9dffb;
+  border-color: #4a3a6a;
 }
-.retro-window--diploma .zone-input:focus,
-.retro-window--diploma .zone-textarea:focus {
-  border-color: #b8932f;
+.retro-window--medal .zone-input:focus,
+.retro-window--medal .zone-textarea:focus {
+  border-color: #d4af37;
 }
-.retro-window--diploma .zone-btn {
-  background: #b8932f;
+.retro-window--medal .zone-btn {
+  background: #d4af37;
   color: #2b210a;
 }
-.retro-window--diploma .zone-btn:hover {
-  background: #7a2e2e;
-  color: #fff;
+.retro-window--medal .zone-btn:hover {
+  background: #ffd86b;
 }
-.retro-window--diploma .zone-btn--ghost {
+.retro-window--medal .zone-btn--ghost {
   background: transparent;
-  color: #7a2e2e;
-  border-color: #7a2e2e;
+  color: #ffd86b;
+  border-color: #d4af37;
 }
-.retro-window--diploma .zone-btn--ghost:hover {
-  background: #7a2e2e;
-  color: #fff;
+.retro-window--medal .zone-btn--ghost:hover {
+  background: #d4af37;
+  color: #2b210a;
 }
-.retro-window--diploma .zone-btn--danger {
+.retro-window--medal .zone-btn--danger {
   background: #a33322;
   color: #fff;
 }
