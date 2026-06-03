@@ -89,6 +89,17 @@ export function isBehindWall(x, y) {
   return cross < 0
 }
 
+// z-index del overlay de la pared interna. Los sprites detras de la pared
+// quedan por debajo (z < este valor); los de delante, por encima.
+export const WALL_OVERLAY_Z = 1600
+
+// z-index para ordenar por profundidad cualquier sprite anclado por su base
+// (personaje y objetos). Detras de la pared: ordenado por Y debajo del overlay.
+// Delante: por encima del overlay, y entre si mas abajo (Y mayor) = mas cerca.
+export function depthZ(x, y) {
+  return isBehindWall(x, y) ? Math.round(y) : WALL_OVERLAY_Z + Math.round(y)
+}
+
 // Punto dentro de poligono por ray casting
 export function pointInPolygon(x, y, polygon) {
   let inside = false

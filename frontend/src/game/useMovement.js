@@ -24,7 +24,8 @@ const KEY_MAP = {
 // Mueve al personaje con WASD y lo mantiene dentro del piso.
 // start: punto inicial de los pies (x, y) en pixeles de imagen.
 // paused: si es true, ignora el teclado y detiene al personaje (p.ej. con un modal abierto).
-export function useMovement(start, paused = false) {
+// isBlocked(x,y): opcional, true si esa posicion esta ocupada por un objeto solido.
+export function useMovement(start, paused = false, isBlocked = null) {
   const [pos, setPos] = useState(start)
   const [facing, setFacing] = useState('down')
   const [moving, setMoving] = useState(false)
@@ -32,12 +33,18 @@ export function useMovement(start, paused = false) {
   const posRef = useRef(start)
   const keys = useRef({ up: false, down: false, left: false, right: false })
   const pausedRef = useRef(paused)
+  const blockedRef = useRef(isBlocked)
 
   // Mantiene el ref sincronizado y suelta las teclas al pausar.
   useEffect(() => {
     pausedRef.current = paused
     if (paused) keys.current = { up: false, down: false, left: false, right: false }
   }, [paused])
+
+  // Mantiene el detector de objetos al dia sin reiniciar el bucle de animacion.
+  useEffect(() => {
+    blockedRef.current = isBlocked
+  }, [isBlocked])
 
   useEffect(() => {
     const onDown = (e) => {
@@ -81,12 +88,16 @@ export function useMovement(start, paused = false) {
         dx = (dx / len) * SPEED * dt
         dy = (dy / len) * SPEED * dt
 
+        // Pisable y, ademas, libre de objetos solidos
+        const walk = (px, py) =>
+          canWalk(px, py) && !(blockedRef.current && blockedRef.current(px, py))
+
         const [x, y] = posRef.current
         let nx = x
         let ny = y
         // Resuelve cada eje por separado para deslizar sobre los bordes
-        if (canWalk(x + dx, y)) nx = x + dx
-        if (canWalk(nx, y + dy)) ny = y + dy
+        if (walk(x + dx, y)) nx = x + dx
+        if (walk(nx, y + dy)) ny = y + dy
 
         if (nx !== x || ny !== y) {
           posRef.current = [nx, ny]

@@ -35,7 +35,8 @@ function sizeOf(sheet) {
 }
 
 // Personaje anclado por los pies en (x, y), en pixeles de la imagen del cuarto.
-export default function Character({ x, y, facing, moving, zIndex }) {
+// lift: elevacion visual en el eje Y (p.ej. al pararse sobre el portal).
+export default function Character({ x, y, facing, moving, zIndex, lift = 0 }) {
   const sheet = SHEETS[facing] || SHEETS.down
 
   const [frame, setFrame] = useState(0)
@@ -74,6 +75,7 @@ export default function Character({ x, y, facing, moving, zIndex }) {
       style={{
         left: x - w / 2,
         top: y - h,
+        marginTop: -lift,
         width: w,
         height: h,
         zIndex,

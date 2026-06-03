@@ -4,4 +4,17 @@
   image-rendering: pixelated;
   pointer-events: none;
   user-select: none;
+  /* Elevacion suave al subirse a algo (p.ej. el portal) */
+  transition: margin-top 180ms ease-out;
+  /* Aparicion: sube su opacidad la primera vez que se ve */
+  animation: char-spawn 1s ease-out both;
+}
+
+@keyframes char-spawn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

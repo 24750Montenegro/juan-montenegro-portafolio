@@ -39,7 +39,7 @@
   transform: translate(-50%, -50%);
   width: 72px;
   height: 72px;
-  z-index: 4;
+  z-index: 5000;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -106,4 +106,25 @@
   background: #2cf6c2;
   padding: 0.5em 0.7em;
   border-radius: 4px;
+}
+
+/* ===== EDITOR (temporal) — borrar junto con el editor ===== */
+.editor-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 101;
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  background: rgba(10, 10, 22, 0.85);
+  border: 2px solid #2cf6c2;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 14px rgba(44, 246, 194, 0.35);
+}
+.editor-toggle:hover {
+  background: rgba(44, 246, 194, 0.2);
 }

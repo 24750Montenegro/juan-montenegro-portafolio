@@ -1,0 +1,16 @@
+/* Objetos colocados en el cuarto. Arte hi-res: escalado suave (no pixelado). */
+.room-object {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  image-rendering: auto;
+}
+
+.room-object--sprite {
+  background-repeat: no-repeat;
+}
+
+/* Fundido suave entre frames (p.ej. modo proximity de la silla) */
+.room-object--fade {
+  transition: opacity 300ms ease;
+}
