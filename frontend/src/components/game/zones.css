@@ -1,0 +1,123 @@
+/* Estilos retro compartidos por las pantallas de zona (conocimientos,
+   logros, social): cuerpo, mensajes, botones y formularios de admin. */
+
+.zone {
+  padding: 1em 1.1em 1.6em;
+}
+
+/* Mensajes de estado (cargando, error, vacio) */
+.zone-msg {
+  font-size: clamp(16px, 2.6vw, 26px);
+  color: #2cf6c2;
+}
+.zone-msg--err {
+  color: #ff6b6b;
+}
+.zone-caret {
+  animation: zone-blink 1s steps(1) infinite;
+}
+@keyframes zone-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Botones retro */
+.zone-btn {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 1.2vw, 11px);
+  color: #0a0a16;
+  background: #2cf6c2;
+  border: none;
+  padding: 0.7em 1em;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease;
+}
+.zone-btn:hover {
+  background: #ff2e88;
+}
+.zone-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.zone-btn--ghost {
+  color: #2cf6c2;
+  background: transparent;
+  border: 2px solid #2cf6c2;
+}
+.zone-btn--ghost:hover {
+  color: #0a0a16;
+  background: #2cf6c2;
+}
+.zone-btn--danger {
+  color: #fff;
+  background: #c8324f;
+}
+.zone-btn--danger:hover {
+  background: #ff2e88;
+}
+
+/* Barra de administracion sobre el listado */
+.zone-admin {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+  padding-bottom: 0.8em;
+  border-bottom: 2px dashed #2b2b50;
+}
+.zone-admin__tag {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1.1vw, 10px);
+  color: #fffb96;
+}
+
+/* Formulario de alta/edicion */
+.zone-form {
+  display: grid;
+  gap: 0.7em;
+  margin-bottom: 1.2em;
+  padding: 0.9em;
+  background: rgba(43, 43, 80, 0.3);
+  border: 2px solid #2b2b50;
+  border-left: 4px solid #fffb96;
+}
+.zone-field {
+  display: grid;
+  gap: 0.25em;
+}
+.zone-field > span {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(7px, 1vw, 9px);
+  color: #7ad7ff;
+}
+.zone-input,
+.zone-textarea,
+.zone-select {
+  width: 100%;
+  font-family: 'VT323', monospace;
+  font-size: clamp(15px, 2vw, 20px);
+  color: #cfe9ff;
+  background: #0a0a16;
+  border: 2px solid #2b2b50;
+  padding: 0.3em 0.5em;
+}
+.zone-input:focus,
+.zone-textarea:focus,
+.zone-select:focus {
+  outline: none;
+  border-color: #2cf6c2;
+}
+.zone-textarea {
+  resize: vertical;
+  min-height: 3.5em;
+}
+.zone-form__actions {
+  display: flex;
+  gap: 0.6em;
+}
+.zone-error {
+  color: #ff6b6b;
+  font-size: clamp(15px, 2vw, 20px);
+}
