@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useLanguage } from '../../hooks/useLanguage.js'
 import './RetroWindow.css'
 
 // Ventana modal con estetica retro (sin marco PNG). El `variant` cambia el
@@ -12,6 +13,7 @@ export default function RetroWindow({
   onClose,
   children,
 }) {
+  const { t } = useLanguage()
   // Cerrar con Escape.
   useEffect(() => {
     const onKey = (e) => {
@@ -34,7 +36,7 @@ export default function RetroWindow({
             type="button"
             className="retro-window__close"
             onClick={onClose}
-            aria-label="Cerrar"
+            aria-label={t('common.close')}
           >
             X
           </button>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLanguage } from '../../hooks/useLanguage.js'
 import caraSheet from '../../assets/cara1-sheet.png'
 import './EditorReward.css'
 
@@ -9,6 +10,7 @@ const FRAMES = 3
 // globo pixelart avisando que se habilito la edicion de objetos por esta sesion.
 // Se cierra al hacer clic.
 export default function EditorReward({ onClose }) {
+  const { t } = useLanguage()
   const [frame, setFrame] = useState(0)
 
   useEffect(() => {
@@ -17,16 +19,15 @@ export default function EditorReward({ onClose }) {
   }, [])
 
   return (
-    <div className="reward" onClick={onClose} title="Cerrar" role="status">
+    <div className="reward" onClick={onClose} title={t('editorReward.close')} role="status">
       <div
         className="reward__face"
         style={{ backgroundImage: `url(${caraSheet})`, backgroundPositionX: `${frame * 50}%` }}
       />
       <div className="reward__bubble">
-        Has descubierto el easter-egg, como recompensa te habilitare la
-        modificacion de objetos existentes{' '}
-        <strong>(aunque solo para tu sesion actual)</strong>.
-        <span className="reward__hint">clic para cerrar</span>
+        {t('editorReward.text')}{' '}
+        <strong>{t('editorReward.note')}</strong>.
+        <span className="reward__hint">{t('editorReward.hint')}</span>
       </div>
     </div>
   )

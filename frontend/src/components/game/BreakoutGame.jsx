@@ -3,6 +3,7 @@
 // Easter egg: el codigo Konami (↑↑↓↓←→←→BA, en WASD o flechas) dispara una
 // explosion de puntaje y revela un huevo que enlaza al Instagram.
 import { useEffect, useRef, useState } from 'react'
+import { useLanguage } from '../../hooks/useLanguage.js'
 import eggImg from '../../assets/egg.png'
 import './BreakoutGame.css'
 
@@ -36,8 +37,19 @@ const EGG_RAMP = 1.6 // segundos que tarda en subir el puntaje
 const EGG_SHOW_AT = 1.9 // segundos hasta revelar el huevo
 
 export default function BreakoutGame() {
+  const { t } = useLanguage()
   const canvasRef = useRef(null)
   const [showEgg, setShowEgg] = useState(false)
+
+  // Cadenas del HUD que dependen del idioma. Se guardan en un ref para que el
+  // bucle del canvas (que solo se monta una vez) lea siempre el valor actual
+  // sin reiniciar la partida al cambiar de idioma.
+  const msgsRef = useRef({})
+  msgsRef.current = {
+    spaceClick: t('breakout.hintSpaceClick'),
+    spacePlay: t('breakout.hintSpacePlay'),
+    spaceRetry: t('breakout.hintSpaceRetry'),
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -334,13 +346,13 @@ export default function BreakoutGame() {
       // Mensajes de estado
       if (game.state === 'ready') {
         text('BREAKOUT', W / 2, H / 2 - 14, 14, '#ff2e88')
-        text('ESPACIO / CLIC', W / 2, H / 2 + 16, 8, '#cfe9ff')
+        text(msgsRef.current.spaceClick, W / 2, H / 2 + 16, 8, '#cfe9ff')
       } else if (game.state === 'won') {
         text('YOU WIN!', W / 2, H / 2 - 12, 16, '#2cf6c2')
-        text('ESPACIO = JUGAR', W / 2, H / 2 + 16, 8, '#cfe9ff')
+        text(msgsRef.current.spacePlay, W / 2, H / 2 + 16, 8, '#cfe9ff')
       } else if (game.state === 'lost') {
         text('GAME OVER', W / 2, H / 2 - 12, 14, '#ff4d6d')
-        text('ESPACIO = REINTENTAR', W / 2, H / 2 + 16, 7, '#cfe9ff')
+        text(msgsRef.current.spaceRetry, W / 2, H / 2 + 16, 7, '#cfe9ff')
       }
     }
 

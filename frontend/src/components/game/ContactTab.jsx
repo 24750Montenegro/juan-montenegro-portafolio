@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import { usePerfil } from '../../hooks/usePerfil.js'
 import { useAuth } from '../../hooks/useAuth.js'
+import { useLanguage } from '../../hooks/useLanguage.js'
 import { apiActualizarPerfil, apiEliminarPdf } from '../../api/perfilApi.js'
 import gmailIcon from '../../assets/gmail.png'
 import githubIcon from '../../assets/github.png'
@@ -13,6 +14,7 @@ import './zones.css'
 export default function ContactTab() {
   const { perfil, cargando, error, recargar } = usePerfil()
   const { autenticado } = useAuth()
+  const { t } = useLanguage()
   const [editando, setEditando] = useState(false)
   const [form, setForm] = useState({ email: '', githubUrl: '', linkedinUrl: '' })
   const [pdf, setPdf] = useState(null)
@@ -48,24 +50,24 @@ export default function ContactTab() {
       setEditando(false)
       recargar()
     } catch {
-      setErrForm('No se pudo guardar el contacto')
+      setErrForm(t('contact.saveError'))
     } finally {
       setGuardando(false)
     }
   }
 
   const quitarPdf = async () => {
-    if (!window.confirm('Quitar el PDF del portafolio?')) return
+    if (!window.confirm(t('contact.removePdfConfirm'))) return
     await apiEliminarPdf()
     recargar()
   }
 
-  if (cargando) return <p className="zone-msg">&gt; cargando contacto<span className="zone-caret">_</span></p>
+  if (cargando) return <p className="zone-msg">{t('contact.loading')}<span className="zone-caret">_</span></p>
   if (error) {
     return (
       <div className="zone-msg zone-msg--err">
         <p>&gt; ERROR: {error}</p>
-        <button type="button" className="zone-btn" onClick={recargar}>REINTENTAR</button>
+        <button type="button" className="zone-btn" onClick={recargar}>{t('common.retry')}</button>
       </div>
     )
   }
@@ -74,10 +76,10 @@ export default function ContactTab() {
     <div className="contact">
       {autenticado && (
         <div className="zone-admin">
-          <span className="zone-admin__tag">ADMIN</span>
-          <button type="button" className="zone-btn" onClick={abrir}>EDITAR CONTACTO</button>
+          <span className="zone-admin__tag">{t('common.admin')}</span>
+          <button type="button" className="zone-btn" onClick={abrir}>{t('contact.editContact')}</button>
           {perfil?.pdf_url && (
-            <button type="button" className="zone-btn zone-btn--danger" onClick={quitarPdf}>QUITAR PDF</button>
+            <button type="button" className="zone-btn zone-btn--danger" onClick={quitarPdf}>{t('contact.removePdf')}</button>
           )}
         </div>
       )}
@@ -85,47 +87,47 @@ export default function ContactTab() {
       {autenticado && editando && (
         <form className="zone-form" onSubmit={enviar}>
           <label className="zone-field">
-            <span>Email</span>
+            <span>{t('contact.email')}</span>
             <input className="zone-input" type="email" name="email" value={form.email} onChange={cambiar} maxLength={160} />
           </label>
           <label className="zone-field">
-            <span>Enlace a GitHub</span>
+            <span>{t('contact.githubLink')}</span>
             <input className="zone-input" type="url" name="githubUrl" value={form.githubUrl} onChange={cambiar} placeholder="https://github.com/..." />
           </label>
           <label className="zone-field">
-            <span>Enlace a LinkedIn</span>
+            <span>{t('contact.linkedinLink')}</span>
             <input className="zone-input" type="url" name="linkedinUrl" value={form.linkedinUrl} onChange={cambiar} placeholder="https://linkedin.com/in/..." />
           </label>
           <label className="zone-field">
-            <span>PDF del portafolio (reemplaza el actual)</span>
+            <span>{t('contact.pdfField')}</span>
             <input className="zone-input" type="file" accept="application/pdf" onChange={(e) => setPdf(e.target.files[0] || null)} />
           </label>
           {errForm && <p className="zone-error">{errForm}</p>}
           <div className="zone-form__actions">
-            <button type="submit" className="zone-btn" disabled={guardando}>{guardando ? 'GUARDANDO...' : 'GUARDAR'}</button>
-            <button type="button" className="zone-btn zone-btn--ghost" onClick={() => setEditando(false)}>CANCELAR</button>
+            <button type="submit" className="zone-btn" disabled={guardando}>{guardando ? t('common.saving') : t('common.save')}</button>
+            <button type="button" className="zone-btn zone-btn--ghost" onClick={() => setEditando(false)}>{t('common.cancel')}</button>
           </div>
         </form>
       )}
 
-      <h3 className="contact__title">PORTAFOLIO (PDF)</h3>
+      <h3 className="contact__title">{t('contact.pdfTitle')}</h3>
       {perfil?.pdf_url ? (
         <div className="contact__pdf">
-          <iframe className="contact__viewer" src={perfil.pdf_url} title="Portafolio en PDF" />
+          <iframe className="contact__viewer" src={perfil.pdf_url} title={t('contact.viewerTitle')} />
           <a className="zone-btn zone-btn--ghost" href={perfil.pdf_url} target="_blank" rel="noopener noreferrer">
-            ABRIR EN PESTANA NUEVA
+            {t('contact.openNewTab')}
           </a>
         </div>
       ) : (
-        <p className="zone-msg">&gt; aun no hay un PDF publicado.</p>
+        <p className="zone-msg">{t('contact.noPdf')}</p>
       )}
 
-      <h3 className="contact__title">CONTACTO</h3>
+      <h3 className="contact__title">{t('contact.contactTitle')}</h3>
       {perfil?.email || perfil?.github_url || perfil?.linkedin_url ? (
         <ul className="contact__links">
           {perfil?.email && (
             <li>
-              <a href={`mailto:${perfil.email}`} title={perfil.email} aria-label="Enviar correo">
+              <a href={`mailto:${perfil.email}`} title={perfil.email} aria-label={t('contact.sendEmail')}>
                 <img className="contact__icon" src={gmailIcon} alt="Email" />
               </a>
             </li>
@@ -146,7 +148,7 @@ export default function ContactTab() {
           )}
         </ul>
       ) : (
-        <p className="zone-msg">&gt; aun no hay datos de contacto.</p>
+        <p className="zone-msg">{t('contact.noContact')}</p>
       )}
     </div>
   )

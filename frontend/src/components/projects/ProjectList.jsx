@@ -1,10 +1,12 @@
 // Cuadricula responsive de tarjetas de proyectos
 import { ProjectCard } from './ProjectCard.jsx';
+import { useLanguage } from '../../hooks/useLanguage.js';
 import './ProjectList.css';
 
 export function ProjectList({ proyectos }) {
+  const { t } = useLanguage();
   if (proyectos.length === 0) {
-    return <p className="lista-proyectos__vacio">Aun no hay proyectos publicados.</p>;
+    return <p className="lista-proyectos__vacio">{t('projects.empty')}</p>;
   }
   return (
     <div className="lista-proyectos">

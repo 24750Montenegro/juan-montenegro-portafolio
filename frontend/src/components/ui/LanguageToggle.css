@@ -1,0 +1,61 @@
+/* Interruptor de idioma pixelart, fijo arriba a la derecha. Esquinas duras,
+   fuente de mapa de bits y borde de neon con sombra dura para contrastar sobre
+   el fondo oscuro de la sala. */
+.lang-toggle {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 9000; /* por encima de la sala, marcadores y modales */
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: rgba(10, 10, 22, 0.92);
+  border: 3px solid #2cf6c2;
+  border-radius: 0; /* esquinas duras (pixel) */
+  /* anillo oscuro + glow para destacar sobre cualquier fondo */
+  box-shadow: 0 0 0 3px #0a0a16, 4px 4px 0 0 rgba(0, 0, 0, 0.6),
+    0 0 14px rgba(44, 246, 194, 0.4);
+  image-rendering: pixelated;
+}
+
+.lang-toggle__opt {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  line-height: 1;
+  padding: 8px 9px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: transparent;
+  color: #7c8b99; /* inactivo: atenuado */
+  letter-spacing: 1px;
+  /* transiciones por pasos para no romper la estetica pixel */
+  transition: color 120ms steps(2), background-color 120ms steps(2);
+}
+
+.lang-toggle__opt:hover {
+  color: #cfe9ff;
+}
+
+.lang-toggle__opt:focus-visible {
+  outline: none;
+  border-color: #ff2e88;
+}
+
+/* Activo: keycap encendido (igual que el chip de la tecla E del juego) */
+.lang-toggle__opt.is-active {
+  color: #0a0a16;
+  background: #2cf6c2;
+  text-shadow: none;
+  box-shadow: 0 0 8px rgba(44, 246, 194, 0.7);
+}
+
+@media (max-width: 480px) {
+  .lang-toggle {
+    top: 10px;
+    right: 10px;
+  }
+  .lang-toggle__opt {
+    font-size: 10px;
+    padding: 7px 8px;
+  }
+}

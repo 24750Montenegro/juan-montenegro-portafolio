@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import { useSkills } from '../../hooks/useSkills.js'
 import { useAuth } from '../../hooks/useAuth.js'
+import { useLanguage } from '../../hooks/useLanguage.js'
 import {
   apiCrearConocimiento, apiActualizarConocimiento, apiEliminarConocimiento,
 } from '../../api/skillsApi.js'
@@ -13,10 +14,10 @@ import './SkillsScreen.css'
 const FORM_INICIAL = { nombre: '', categoria: '', descripcion: '', nivel: 50, orden: 0 }
 
 // Agrupa los conocimientos por categoria conservando el orden de llegada
-function agruparPorCategoria(lista) {
+function agruparPorCategoria(lista, generalLabel) {
   const grupos = new Map()
   for (const c of lista) {
-    const clave = c.categoria?.trim() || 'General'
+    const clave = c.categoria?.trim() || generalLabel
     if (!grupos.has(clave)) grupos.set(clave, [])
     grupos.get(clave).push(c)
   }
@@ -26,6 +27,7 @@ function agruparPorCategoria(lista) {
 export default function SkillsScreen() {
   const { conocimientos, cargando, error, recargar } = useSkills()
   const { autenticado } = useAuth()
+  const { t } = useLanguage()
   const [editId, setEditId] = useState(null)
   const [form, setForm] = useState(FORM_INICIAL)
   const [imagen, setImagen] = useState(null)
@@ -64,14 +66,14 @@ export default function SkillsScreen() {
       cerrar()
       recargar()
     } catch {
-      setErrForm('No se pudo guardar el conocimiento')
+      setErrForm(t('skills.saveError'))
     } finally {
       setGuardando(false)
     }
   }
 
   const eliminar = async (id) => {
-    if (!window.confirm('Eliminar este conocimiento?')) return
+    if (!window.confirm(t('skills.deleteConfirm'))) return
     await apiEliminarConocimiento(id)
     recargar()
   }
@@ -80,61 +82,61 @@ export default function SkillsScreen() {
     <div className="zone book">
       {autenticado && (
         <div className="zone-admin">
-          <span className="zone-admin__tag">ADMIN</span>
-          <button type="button" className="zone-btn" onClick={abrirNuevo}>+ NUEVO</button>
+          <span className="zone-admin__tag">{t('common.admin')}</span>
+          <button type="button" className="zone-btn" onClick={abrirNuevo}>{t('common.new')}</button>
         </div>
       )}
 
       {autenticado && editId !== null && (
         <form className="zone-form" onSubmit={enviar}>
           <label className="zone-field">
-            <span>Titulo</span>
+            <span>{t('skills.title')}</span>
             <input className="zone-input" name="nombre" value={form.nombre} onChange={cambiar} required maxLength={80} />
           </label>
           <label className="zone-field">
-            <span>Categoria</span>
-            <input className="zone-input" name="categoria" value={form.categoria} onChange={cambiar} maxLength={60} placeholder="Frontend, Backend..." />
+            <span>{t('skills.category')}</span>
+            <input className="zone-input" name="categoria" value={form.categoria} onChange={cambiar} maxLength={60} placeholder={t('skills.categoryPlaceholder')} />
           </label>
           <label className="zone-field">
-            <span>Detalle</span>
+            <span>{t('skills.detail')}</span>
             <textarea className="zone-textarea" name="descripcion" value={form.descripcion} onChange={cambiar} rows={3} />
           </label>
           <label className="zone-field">
-            <span>Nivel: {form.nivel}%</span>
+            <span>{t('skills.level')}: {form.nivel}%</span>
             <input type="range" name="nivel" min="0" max="100" value={form.nivel} onChange={cambiar} />
           </label>
           <label className="zone-field">
-            <span>Orden</span>
+            <span>{t('skills.order')}</span>
             <input className="zone-input" type="number" name="orden" value={form.orden} onChange={cambiar} />
           </label>
           <label className="zone-field">
-            <span>Logo (pixelart, opcional)</span>
+            <span>{t('skills.logo')}</span>
             <input className="zone-input" type="file" accept="image/*" onChange={(e) => setImagen(e.target.files[0] || null)} />
           </label>
           {errForm && <p className="zone-error">{errForm}</p>}
           <div className="zone-form__actions">
             <button type="submit" className="zone-btn" disabled={guardando}>
-              {guardando ? 'GUARDANDO...' : 'GUARDAR'}
+              {guardando ? t('common.saving') : t('common.save')}
             </button>
-            <button type="button" className="zone-btn zone-btn--ghost" onClick={cerrar}>CANCELAR</button>
+            <button type="button" className="zone-btn zone-btn--ghost" onClick={cerrar}>{t('common.cancel')}</button>
           </div>
         </form>
       )}
 
-      {cargando && <p className="zone-msg">cargando conocimientos...</p>}
+      {cargando && <p className="zone-msg">{t('skills.loading')}</p>}
 
       {error && (
         <div className="zone-msg zone-msg--err">
           <p>ERROR: {error}</p>
-          <button type="button" className="zone-btn" onClick={recargar}>REINTENTAR</button>
+          <button type="button" className="zone-btn" onClick={recargar}>{t('common.retry')}</button>
         </div>
       )}
 
       {!cargando && !error && conocimientos.length === 0 && (
-        <p className="zone-msg">Aun no hay conocimientos publicados.</p>
+        <p className="zone-msg">{t('skills.empty')}</p>
       )}
 
-      {!cargando && !error && agruparPorCategoria(conocimientos).map(([categoria, items]) => (
+      {!cargando && !error && agruparPorCategoria(conocimientos, t('skills.generalCategory')).map(([categoria, items]) => (
         <section key={categoria} className="book-chapter">
           <h3 className="book-chapter__title">{categoria}</h3>
           <ul className="book-list">
@@ -156,8 +158,8 @@ export default function SkillsScreen() {
                   </div>
                   {autenticado && (
                     <div className="book-entry__admin">
-                      <button type="button" className="zone-btn zone-btn--ghost" onClick={() => abrirEdicion(c)}>EDITAR</button>
-                      <button type="button" className="zone-btn zone-btn--danger" onClick={() => eliminar(c.id)}>BORRAR</button>
+                      <button type="button" className="zone-btn zone-btn--ghost" onClick={() => abrirEdicion(c)}>{t('common.edit')}</button>
+                      <button type="button" className="zone-btn zone-btn--danger" onClick={() => eliminar(c.id)}>{t('common.delete')}</button>
                     </div>
                   )}
                 </div>
