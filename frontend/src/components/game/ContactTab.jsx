@@ -9,6 +9,7 @@ import { apiActualizarPerfil, apiEliminarPdf } from '../../api/perfilApi.js'
 import gmailIcon from '../../assets/gmail.png'
 import githubIcon from '../../assets/github.png'
 import linkedinIcon from '../../assets/linkedin.png'
+import caraFoto from '../../assets/cara1.png'
 import './zones.css'
 
 export default function ContactTab() {
@@ -109,6 +110,16 @@ export default function ContactTab() {
           </div>
         </form>
       )}
+
+      <h3 className="contact__title">{t('contact.aboutTitle')}</h3>
+      <div className="about">
+        <img className="about__photo" src={caraFoto} alt={t('contact.aboutPhotoAlt')} />
+        <div className="about__info">
+          <p className="about__name">{t('contact.aboutName')}</p>
+          <p className="about__role">{t('contact.aboutRole')}</p>
+          <p className="about__bio">{t('contact.aboutBio')}</p>
+        </div>
+      </div>
 
       <h3 className="contact__title">{t('contact.pdfTitle')}</h3>
       {perfil?.pdf_url ? (
