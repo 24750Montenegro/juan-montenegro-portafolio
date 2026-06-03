@@ -25,16 +25,24 @@ CREATE TABLE IF NOT EXISTS proyectos (
 
 CREATE INDEX IF NOT EXISTS idx_proyectos_orden ON proyectos (orden);
 
--- Conocimientos: habilidades con nivel para barra de progreso
+-- Conocimientos: habilidades con logo, detalle y nivel de progreso
 CREATE TABLE IF NOT EXISTS conocimientos (
   id              SERIAL PRIMARY KEY,
   nombre          VARCHAR(80)  NOT NULL,
   categoria       VARCHAR(60),
+  descripcion     TEXT,
   nivel           INTEGER      NOT NULL DEFAULT 0,
+  imagen_url      VARCHAR(500),
+  imagen_id       VARCHAR(255),
   orden           INTEGER      NOT NULL DEFAULT 0,
   creado_en       TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
   actualizado_en  TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
+
+-- Columnas agregadas despues de la creacion inicial (para bases ya migradas)
+ALTER TABLE conocimientos ADD COLUMN IF NOT EXISTS descripcion TEXT;
+ALTER TABLE conocimientos ADD COLUMN IF NOT EXISTS imagen_url VARCHAR(500);
+ALTER TABLE conocimientos ADD COLUMN IF NOT EXISTS imagen_id VARCHAR(255);
 
 CREATE INDEX IF NOT EXISTS idx_conocimientos_orden ON conocimientos (orden);
 

@@ -17,12 +17,15 @@ export const obtenerConocimiento = async (id) => {
 
 // Inserta un conocimiento y devuelve el registro creado
 export const insertarConocimiento = async (datos) => {
-  const { nombre, categoria, nivel, orden } = datos;
+  const {
+    nombre, categoria, descripcion, nivel, imagenUrl, imagenId, orden,
+  } = datos;
   const { rows } = await query(
-    `INSERT INTO conocimientos (nombre, categoria, nivel, orden)
-     VALUES ($1, $2, $3, $4)
+    `INSERT INTO conocimientos
+       (nombre, categoria, descripcion, nivel, imagen_url, imagen_id, orden)
+     VALUES ($1, $2, $3, $4, $5, $6, $7)
      RETURNING *`,
-    [nombre, categoria, nivel, orden],
+    [nombre, categoria, descripcion, nivel, imagenUrl, imagenId, orden],
   );
   return rows[0];
 };
@@ -32,7 +35,10 @@ export const actualizarConocimiento = async (id, datos) => {
   const columnas = {
     nombre: datos.nombre,
     categoria: datos.categoria,
+    descripcion: datos.descripcion,
     nivel: datos.nivel,
+    imagen_url: datos.imagenUrl,
+    imagen_id: datos.imagenId,
     orden: datos.orden,
   };
   const entradas = Object.entries(columnas).filter(([, valor]) => valor !== undefined);
@@ -46,10 +52,10 @@ export const actualizarConocimiento = async (id, datos) => {
   return rows[0] || null;
 };
 
-// Elimina un conocimiento; devuelve el id eliminado o null
+// Elimina un conocimiento y devuelve su imagen_id para limpiar Cloudinary
 export const eliminarConocimiento = async (id) => {
   const { rows } = await query(
-    'DELETE FROM conocimientos WHERE id = $1 RETURNING id',
+    'DELETE FROM conocimientos WHERE id = $1 RETURNING imagen_id',
     [id],
   );
   return rows[0] || null;
