@@ -97,8 +97,8 @@
   background: #12122a;
 }
 
-/* Scanlines CRT sutiles encima de la ventana */
-.retro-window__scanlines {
+/* Textura encima de la ventana (scanlines CRT para la variante terminal) */
+.retro-window__texture {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -109,6 +109,66 @@
     rgba(0, 0, 0, 0.18) 4px
   );
   mix-blend-mode: multiply;
+}
+
+/* ============================ Variante libro ============================ */
+/* Conocimientos: aspecto de hojas/libro con papel y encuadernado de cuero. */
+.retro-window--book {
+  background: #efe3c6;
+  border: 4px solid #6b4f2e;
+  box-shadow: 0 0 0 3px #c8b483, 0 18px 40px rgba(0, 0, 0, 0.6);
+  /* Lomo del libro: banda oscura en el borde izquierdo */
+  border-left-width: 18px;
+}
+
+.retro-window--book .retro-window__bar {
+  background: linear-gradient(180deg, #6b4f2e, #553d22);
+  border-bottom: 3px solid #c8b483;
+  color: #efe3c6;
+  justify-content: center;
+}
+.retro-window--book .retro-window__title {
+  color: #ffe9b0;
+}
+.retro-window--book .retro-window__body {
+  background: #efe3c6;
+  color: #4a361f;
+}
+/* Renglones tenues tipo cuaderno */
+.retro-window--book .retro-window__texture {
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 30px,
+    rgba(107, 79, 46, 0.12) 30px,
+    rgba(107, 79, 46, 0.12) 31px
+  );
+  mix-blend-mode: normal;
+}
+
+/* =========================== Variante diploma =========================== */
+/* Logros: aspecto de certificado con doble borde dorado sobre pergamino. */
+.retro-window--diploma {
+  background: #f4e8c8;
+  border: 4px solid #b8932f;
+  box-shadow: 0 0 0 4px #f4e8c8, 0 0 0 8px #b8932f, 0 18px 40px rgba(0, 0, 0, 0.6);
+}
+
+.retro-window--diploma .retro-window__bar {
+  background: linear-gradient(180deg, #7a2e2e, #5e2222);
+  border-bottom: 3px solid #b8932f;
+  color: #f4e8c8;
+  justify-content: center;
+}
+.retro-window--diploma .retro-window__title {
+  color: #ffd86b;
+  letter-spacing: 1px;
+}
+.retro-window--diploma .retro-window__body {
+  background: #f4e8c8;
+  color: #4a3a1f;
+}
+.retro-window--diploma .retro-window__texture {
+  display: none;
 }
 
 @keyframes retro-fade-in {

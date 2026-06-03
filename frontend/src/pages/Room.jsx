@@ -24,10 +24,11 @@ import roomImg from '../assets/habitación vacia.png'
 import './Room.css'
 
 // Zonas que se muestran en una ventana retro (sin marco PNG propio).
+// variant cambia el estilo: libro (conocimientos), diploma (logros) o terminal.
 const WINDOW_SCREENS = {
-  conocimientos: { title: 'CONOCIMIENTOS.EXE', Component: SkillsScreen },
-  logros: { title: 'LOGROS.EXE', Component: AchievementsScreen },
-  social: { title: 'SOCIAL.EXE', Component: SocialScreen },
+  conocimientos: { title: 'Mis Conocimientos', variant: 'book', Component: SkillsScreen },
+  logros: { title: 'Mis Logros', variant: 'diploma', Component: AchievementsScreen },
+  social: { title: 'SOCIAL.EXE', variant: 'terminal', Component: SocialScreen },
 }
 
 // Punto inicial por defecto de los pies (si no hay portal donde aparecer)
@@ -173,6 +174,7 @@ export default function Room() {
       {WINDOW_SCREENS[activeModal] && (
         <RetroWindow
           title={WINDOW_SCREENS[activeModal].title}
+          variant={WINDOW_SCREENS[activeModal].variant}
           onClose={() => setActiveModal(null)}
         >
           {(() => {
