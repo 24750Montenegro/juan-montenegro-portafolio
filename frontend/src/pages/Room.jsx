@@ -24,11 +24,13 @@ import RoomEditor from '../components/game/RoomEditor' // EDITOR (temporal)
 import roomImg from '../assets/habitación vacia.png'
 import './Room.css'
 
-// Codigo Konami que revela el boton del editor (easter egg).
-const KONAMI = [
-  'arrowup', 'arrowup', 'arrowdown', 'arrowdown',
-  'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a',
+// Codigo Konami que revela el boton del editor (easter egg). Se acepta en
+// flechas o en WASD (igual que el easter egg del arcade), ambos terminan en B A.
+const KONAMI_SECUENCIAS = [
+  ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'],
+  ['w', 'w', 's', 's', 'a', 'd', 'a', 'd', 'b', 'a'],
 ]
+const KONAMI_LEN = 10
 
 const WELCOME_KEY = 'welcome.seen.v1'
 
@@ -101,20 +103,16 @@ export default function Room() {
     setWelcomeOpen(false)
   }, [])
 
-  // Detecta el codigo Konami para revelar el editor.
+  // Detecta el codigo Konami (flechas o WASD) para revelar el editor.
   useEffect(() => {
-    let idx = 0
+    let buffer = []
     const onKey = (e) => {
-      const k = e.key.toLowerCase()
-      if (k === KONAMI[idx]) {
-        idx += 1
-        if (idx === KONAMI.length) {
-          setEditorUnlocked(true)
-          idx = 0
-        }
-      } else {
-        idx = k === KONAMI[0] ? 1 : 0
-      }
+      buffer.push(e.key.toLowerCase())
+      if (buffer.length > KONAMI_LEN) buffer = buffer.slice(-KONAMI_LEN)
+      const coincide = KONAMI_SECUENCIAS.some(
+        (seq) => buffer.length === KONAMI_LEN && seq.every((k, i) => k === buffer[i]),
+      )
+      if (coincide) setEditorUnlocked(true)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
