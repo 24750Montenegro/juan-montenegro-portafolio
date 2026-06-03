@@ -71,3 +71,14 @@ CREATE TABLE IF NOT EXISTS resenas (
 );
 
 CREATE INDEX IF NOT EXISTS idx_resenas_creado ON resenas (creado_en DESC);
+
+-- Perfil: datos de contacto y PDF del portafolio (registro unico)
+CREATE TABLE IF NOT EXISTS perfil (
+  id              SERIAL PRIMARY KEY,
+  email           VARCHAR(160),
+  github_url      VARCHAR(500),
+  linkedin_url    VARCHAR(500),
+  pdf_url         VARCHAR(500),
+  pdf_id          VARCHAR(255),
+  actualizado_en  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
