@@ -1,0 +1,55 @@
+.ach-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.9em;
+}
+
+.ach-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(43, 43, 80, 0.35);
+  border: 2px solid #2b2b50;
+  border-top: 4px solid #fffb96;
+}
+
+.ach-card__img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-bottom: 2px solid #12122a;
+}
+
+.ach-card__body {
+  padding: 0.7em 0.8em 0.8em;
+  display: grid;
+  gap: 0.35em;
+}
+
+.ach-card__title {
+  margin: 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(9px, 1.4vw, 13px);
+  color: #fffb96;
+  line-height: 1.5;
+}
+
+.ach-card__date {
+  font-size: clamp(13px, 1.8vw, 18px);
+  color: #2cf6c2;
+}
+
+.ach-card__desc {
+  margin: 0;
+  font-size: clamp(15px, 2vw, 20px);
+  line-height: 1.15;
+  color: #cfe9ff;
+}
+
+.ach-card__admin {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.3em;
+}
