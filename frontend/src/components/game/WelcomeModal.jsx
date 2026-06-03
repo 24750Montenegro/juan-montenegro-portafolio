@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useLanguage } from '../../hooks/useLanguage.js'
 import caraSheet from '../../assets/cara1-sheet.png'
 import './WelcomeModal.css'
 
@@ -8,6 +9,7 @@ const FRAMES = 3
 // Bienvenida que aparece una vez por sesion: el avatar habla y una burbuja
 // pixelart resume donde encontrar cada zona de la sala.
 export default function WelcomeModal({ onClose }) {
+  const { t } = useLanguage()
   const [frame, setFrame] = useState(0)
 
   // Cicla los frames para simular que esta hablando.
@@ -33,15 +35,15 @@ export default function WelcomeModal({ onClose }) {
           style={{ backgroundImage: `url(${caraSheet})`, backgroundPositionX: `${frame * 50}%` }}
         />
         <div className="welcome__bubble">
-          <p className="welcome__title">Bienvenido a mi portafolio</p>
-          <p className="welcome__lead">Recorre la sala. Aqui encuentras:</p>
+          <p className="welcome__title">{t('welcome.title')}</p>
+          <p className="welcome__lead">{t('welcome.lead')}</p>
           <ul className="welcome__list">
-            <li><span>Proyectos</span> en la computadora</li>
-            <li><span>Conocimientos</span> en la estanteria</li>
-            <li><span>Logros</span> en la medalla</li>
-            <li><span>Contacto y Comentarios</span> en el tablero, junto a la medalla</li>
+            <li><span>{t('welcome.projects')}</span> {t('welcome.projectsWhere')}</li>
+            <li><span>{t('welcome.knowledge')}</span> {t('welcome.knowledgeWhere')}</li>
+            <li><span>{t('welcome.achievements')}</span> {t('welcome.achievementsWhere')}</li>
+            <li><span>{t('welcome.contact')}</span> {t('welcome.contactWhere')}</li>
           </ul>
-          <button type="button" className="welcome__btn" onClick={onClose}>EMPEZAR</button>
+          <button type="button" className="welcome__btn" onClick={onClose}>{t('welcome.start')}</button>
         </div>
       </div>
     </div>

@@ -1,7 +1,9 @@
 // Tarjeta que muestra los datos de un proyecto del portafolio
+import { useLanguage } from '../../hooks/useLanguage.js';
 import './ProjectCard.css';
 
 export function ProjectCard({ proyecto }) {
+  const { t } = useLanguage();
   const {
     titulo,
     descripcion,
@@ -26,10 +28,10 @@ export function ProjectCard({ proyecto }) {
         )}
         <div className="tarjeta-proyecto__acciones">
           {repoUrl && (
-            <a href={repoUrl} target="_blank" rel="noopener noreferrer">Repositorio</a>
+            <a href={repoUrl} target="_blank" rel="noopener noreferrer">{t('projectCard.repo')}</a>
           )}
           {demoUrl && (
-            <a href={demoUrl} target="_blank" rel="noopener noreferrer">Demo</a>
+            <a href={demoUrl} target="_blank" rel="noopener noreferrer">{t('projectCard.demo')}</a>
           )}
         </div>
       </div>

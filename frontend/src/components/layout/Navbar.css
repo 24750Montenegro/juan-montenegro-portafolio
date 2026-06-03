@@ -13,6 +13,8 @@
   max-width: var(--ancho-maximo);
   margin-inline: auto;
   padding: var(--espacio-2);
+  /* reserva el hueco del toggle de idioma flotante (arriba a la derecha) */
+  padding-right: 110px;
 }
 
 .navbar__marca {

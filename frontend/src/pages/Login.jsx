@@ -2,11 +2,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
+import { useLanguage } from '../hooks/useLanguage.js';
 import { Button } from '../components/ui/Button.jsx';
 import './Login.css';
 
 export function Login() {
   const { login } = useAuth();
+  const { t } = useLanguage();
   const navegar = useNavigate();
   const [credenciales, setCredenciales] = useState({ email: '', password: '' });
   const [error, setError] = useState(null);
@@ -27,7 +29,7 @@ export function Login() {
       await login(credenciales);
       navegar('/dashboard');
     } catch {
-      setError('Credenciales invalidas');
+      setError(t('login.invalid'));
     } finally {
       setEnviando(false);
     }
@@ -35,10 +37,10 @@ export function Login() {
 
   return (
     <section className="login">
-      <h1 className="login__titulo">Acceder</h1>
+      <h1 className="login__titulo">{t('login.title')}</h1>
       <form className="login__formulario" onSubmit={enviar}>
         <label className="login__campo">
-          <span>Email</span>
+          <span>{t('login.email')}</span>
           <input
             type="email"
             name="email"
@@ -49,7 +51,7 @@ export function Login() {
           />
         </label>
         <label className="login__campo">
-          <span>Contrasena</span>
+          <span>{t('login.password')}</span>
           <input
             type="password"
             name="password"
@@ -62,7 +64,7 @@ export function Login() {
         </label>
         {error && <p className="login__error">{error}</p>}
         <Button tipo="submit" disabled={enviando}>
-          {enviando ? 'Entrando...' : 'Entrar'}
+          {enviando ? t('login.entering') : t('login.enter')}
         </Button>
       </form>
     </section>

@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import { useProjects } from '../../hooks/useProjects.js'
 import { useAuth } from '../../hooks/useAuth.js'
+import { useLanguage } from '../../hooks/useLanguage.js'
 import {
   apiCrearProyecto, apiActualizarProyecto, apiEliminarProyecto,
 } from '../../api/projectsApi.js'
@@ -19,6 +20,7 @@ const FORM_INICIAL = {
 export default function ProjectsScreen() {
   const { proyectos, cargando, error, recargar } = useProjects()
   const { autenticado, login, logout } = useAuth()
+  const { t } = useLanguage()
 
   const [mostrarLogin, setMostrarLogin] = useState(false)
   const [credenciales, setCredenciales] = useState({ email: '', password: '' })
@@ -45,7 +47,7 @@ export default function ProjectsScreen() {
       setMostrarLogin(false)
       setCredenciales({ email: '', password: '' })
     } catch {
-      setLoginError('Credenciales invalidas')
+      setLoginError(t('projectsScreen.loginInvalid'))
     } finally {
       setEntrando(false)
     }
@@ -92,14 +94,14 @@ export default function ProjectsScreen() {
       cerrar()
       recargar()
     } catch {
-      setErrForm('No se pudo guardar el proyecto')
+      setErrForm(t('projectsScreen.saveError'))
     } finally {
       setGuardando(false)
     }
   }
 
   const eliminar = async (id) => {
-    if (!window.confirm('Eliminar este proyecto?')) return
+    if (!window.confirm(t('projectsScreen.deleteConfirm'))) return
     await apiEliminarProyecto(id)
     recargar()
   }
@@ -111,93 +113,93 @@ export default function ProjectsScreen() {
         <span className="pscreen__title">PROYECTOS.EXE</span>
         <span className="pscreen__user">~/juan-montenegro</span>
         {autenticado ? (
-          <button type="button" className="pscreen__admin" onClick={logout}>SALIR</button>
+          <button type="button" className="pscreen__admin" onClick={logout}>{t('projectsScreen.exit')}</button>
         ) : (
-          <button type="button" className="pscreen__admin" onClick={() => setMostrarLogin((s) => !s)}>ADMIN</button>
+          <button type="button" className="pscreen__admin" onClick={() => setMostrarLogin((s) => !s)}>{t('common.admin')}</button>
         )}
       </header>
 
       <div className="pscreen__body">
         {!autenticado && mostrarLogin && (
           <form className="zone-form pscreen__login" onSubmit={enviarLogin}>
-            <p className="pscreen__login-lead">&gt; acceso de administrador</p>
+            <p className="pscreen__login-lead">{t('projectsScreen.adminAccess')}</p>
             <label className="zone-field">
-              <span>Email</span>
+              <span>{t('projectsScreen.email')}</span>
               <input className="zone-input" type="email" name="email" value={credenciales.email} onChange={cambiarCred} required autoComplete="email" />
             </label>
             <label className="zone-field">
-              <span>Contrasena</span>
+              <span>{t('projectsScreen.password')}</span>
               <input className="zone-input" type="password" name="password" value={credenciales.password} onChange={cambiarCred} required minLength={8} autoComplete="current-password" />
             </label>
             {loginError && <p className="zone-error">{loginError}</p>}
             <div className="zone-form__actions">
-              <button type="submit" className="zone-btn" disabled={entrando}>{entrando ? 'ENTRANDO...' : 'ENTRAR'}</button>
-              <button type="button" className="zone-btn zone-btn--ghost" onClick={() => setMostrarLogin(false)}>CANCELAR</button>
+              <button type="submit" className="zone-btn" disabled={entrando}>{entrando ? t('projectsScreen.entering') : t('projectsScreen.enter')}</button>
+              <button type="button" className="zone-btn zone-btn--ghost" onClick={() => setMostrarLogin(false)}>{t('common.cancel')}</button>
             </div>
           </form>
         )}
 
         {autenticado && (
           <div className="zone-admin">
-            <span className="zone-admin__tag">ADMIN</span>
-            <button type="button" className="zone-btn" onClick={abrirNuevo}>+ NUEVO</button>
+            <span className="zone-admin__tag">{t('common.admin')}</span>
+            <button type="button" className="zone-btn" onClick={abrirNuevo}>{t('common.new')}</button>
           </div>
         )}
 
         {autenticado && editId !== null && (
           <form className="zone-form" onSubmit={enviar}>
             <label className="zone-field">
-              <span>Titulo</span>
+              <span>{t('projectsScreen.title')}</span>
               <input className="zone-input" name="titulo" value={form.titulo} onChange={cambiar} required maxLength={120} />
             </label>
             <label className="zone-field">
-              <span>Descripcion</span>
+              <span>{t('projectsScreen.description')}</span>
               <textarea className="zone-textarea" name="descripcion" value={form.descripcion} onChange={cambiar} required rows={3} />
             </label>
             <label className="zone-field">
-              <span>Enlace a GitHub</span>
+              <span>{t('projectsScreen.githubLink')}</span>
               <input className="zone-input" name="repoUrl" type="url" value={form.repoUrl} onChange={cambiar} placeholder="https://github.com/..." />
             </label>
             <label className="zone-field">
-              <span>Enlace a la pagina/demo</span>
+              <span>{t('projectsScreen.demoLink')}</span>
               <input className="zone-input" name="demoUrl" type="url" value={form.demoUrl} onChange={cambiar} placeholder="https://..." />
             </label>
             <label className="zone-field">
-              <span>Etiquetas (separadas por coma)</span>
+              <span>{t('projectsScreen.tags')}</span>
               <input className="zone-input" name="etiquetas" value={form.etiquetas} onChange={cambiar} />
             </label>
             <label className="zone-field">
-              <span>Orden</span>
+              <span>{t('projectsScreen.order')}</span>
               <input className="zone-input" type="number" name="orden" value={form.orden} onChange={cambiar} />
             </label>
             <label className="pscreen__check">
-              <input type="checkbox" name="destacado" checked={form.destacado} onChange={cambiar} /> Destacado
+              <input type="checkbox" name="destacado" checked={form.destacado} onChange={cambiar} /> {t('projectsScreen.featured')}
             </label>
             <label className="zone-field">
-              <span>Imagen</span>
+              <span>{t('projectsScreen.image')}</span>
               <input className="zone-input" type="file" accept="image/*" onChange={(e) => setImagen(e.target.files[0] || null)} />
             </label>
             {errForm && <p className="zone-error">{errForm}</p>}
             <div className="zone-form__actions">
-              <button type="submit" className="zone-btn" disabled={guardando}>{guardando ? 'GUARDANDO...' : 'GUARDAR'}</button>
-              <button type="button" className="zone-btn zone-btn--ghost" onClick={cerrar}>CANCELAR</button>
+              <button type="submit" className="zone-btn" disabled={guardando}>{guardando ? t('common.saving') : t('common.save')}</button>
+              <button type="button" className="zone-btn zone-btn--ghost" onClick={cerrar}>{t('common.cancel')}</button>
             </div>
           </form>
         )}
 
-        {cargando && <p className="pscreen__msg">&gt; cargando proyectos<span className="pscreen__caret">_</span></p>}
+        {cargando && <p className="pscreen__msg">{t('projectsScreen.loading')}<span className="pscreen__caret">_</span></p>}
 
         {error && (
           <div className="pscreen__msg pscreen__msg--err">
             <p>&gt; ERROR: {error}</p>
             <button type="button" className="pscreen__btn" onClick={recargar}>
-              REINTENTAR
+              {t('common.retry')}
             </button>
           </div>
         )}
 
         {!cargando && !error && proyectos.length === 0 && (
-          <p className="pscreen__msg">&gt; aun no hay proyectos publicados.</p>
+          <p className="pscreen__msg">{t('projectsScreen.empty')}</p>
         )}
 
         {!cargando && !error && proyectos.length > 0 && (
@@ -227,15 +229,15 @@ export default function ProjectsScreen() {
                       </a>
                     )}
                     {p.demo_url && (
-                      <a href={p.demo_url} target="_blank" rel="noopener noreferrer" title="Enlace" aria-label="Enlace">
-                        <img className="pscreen__icon" src={linkIcon} alt="Enlace" />
+                      <a href={p.demo_url} target="_blank" rel="noopener noreferrer" title={t('projectsScreen.link')} aria-label={t('projectsScreen.link')}>
+                        <img className="pscreen__icon" src={linkIcon} alt={t('projectsScreen.link')} />
                       </a>
                     )}
                   </div>
                   {autenticado && (
                     <div className="pscreen__card-admin">
-                      <button type="button" className="zone-btn zone-btn--ghost" onClick={() => abrirEdicion(p)}>EDITAR</button>
-                      <button type="button" className="zone-btn zone-btn--danger" onClick={() => eliminar(p.id)}>BORRAR</button>
+                      <button type="button" className="zone-btn zone-btn--ghost" onClick={() => abrirEdicion(p)}>{t('common.edit')}</button>
+                      <button type="button" className="zone-btn zone-btn--danger" onClick={() => eliminar(p.id)}>{t('common.delete')}</button>
                     </div>
                   )}
                 </div>

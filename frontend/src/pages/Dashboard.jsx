@@ -1,6 +1,7 @@
 // Panel de administracion para crear y eliminar proyectos del portafolio
 import { useState } from 'react';
 import { useProjects } from '../hooks/useProjects.js';
+import { useLanguage } from '../hooks/useLanguage.js';
 import { apiCrearProyecto, apiEliminarProyecto } from '../api/projectsApi.js';
 import { Button } from '../components/ui/Button.jsx';
 import './Dashboard.css';
@@ -9,6 +10,7 @@ const FORMULARIO_INICIAL = { titulo: '', descripcion: '', repoUrl: '', demoUrl: 
 
 export function Dashboard() {
   const { proyectos, cargando, recargar } = useProjects();
+  const { t } = useLanguage();
   const [formulario, setFormulario] = useState(FORMULARIO_INICIAL);
   const [imagen, setImagen] = useState(null);
   const [guardando, setGuardando] = useState(false);
@@ -34,7 +36,7 @@ export function Dashboard() {
       setImagen(null);
       recargar();
     } catch {
-      setError('No se pudo crear el proyecto');
+      setError(t('dashboard.createError'));
     } finally {
       setGuardando(false);
     }
@@ -42,58 +44,58 @@ export function Dashboard() {
 
   // Elimina un proyecto tras confirmar la accion
   const eliminar = async (id) => {
-    if (!window.confirm('Eliminar este proyecto?')) return;
+    if (!window.confirm(t('dashboard.deleteConfirm'))) return;
     await apiEliminarProyecto(id);
     recargar();
   };
 
   return (
     <section className="panel">
-      <h1 className="panel__titulo">Panel de proyectos</h1>
+      <h1 className="panel__titulo">{t('dashboard.title')}</h1>
 
       <form className="panel__formulario" onSubmit={crear}>
-        <h2>Nuevo proyecto</h2>
+        <h2>{t('dashboard.newProject')}</h2>
         <label className="panel__campo">
-          <span>Titulo</span>
+          <span>{t('dashboard.titleField')}</span>
           <input name="titulo" value={formulario.titulo} onChange={cambiar} required maxLength={120} />
         </label>
         <label className="panel__campo">
-          <span>Descripcion</span>
+          <span>{t('dashboard.description')}</span>
           <textarea name="descripcion" value={formulario.descripcion} onChange={cambiar} required rows={4} />
         </label>
         <label className="panel__campo">
-          <span>Enlace al repositorio</span>
+          <span>{t('dashboard.repoLink')}</span>
           <input name="repoUrl" type="url" value={formulario.repoUrl} onChange={cambiar} />
         </label>
         <label className="panel__campo">
-          <span>Enlace a la demo</span>
+          <span>{t('dashboard.demoLink')}</span>
           <input name="demoUrl" type="url" value={formulario.demoUrl} onChange={cambiar} />
         </label>
         <label className="panel__campo">
-          <span>Etiquetas (separadas por coma)</span>
+          <span>{t('dashboard.tags')}</span>
           <input name="etiquetas" value={formulario.etiquetas} onChange={cambiar} />
         </label>
         <label className="panel__campo">
-          <span>Imagen</span>
+          <span>{t('dashboard.image')}</span>
           <input type="file" accept="image/*" onChange={(evento) => setImagen(evento.target.files[0] || null)} />
         </label>
         {error && <p className="panel__error">{error}</p>}
         <Button tipo="submit" disabled={guardando}>
-          {guardando ? 'Guardando...' : 'Crear proyecto'}
+          {guardando ? t('dashboard.saving') : t('dashboard.create')}
         </Button>
       </form>
 
       <div className="panel__lista">
-        <h2>Proyectos existentes</h2>
+        <h2>{t('dashboard.existing')}</h2>
         {cargando ? (
-          <p className="panel__aviso">Cargando...</p>
+          <p className="panel__aviso">{t('dashboard.loading')}</p>
         ) : (
           <ul>
             {proyectos.map((proyecto) => (
               <li key={proyecto.id} className="panel__item">
                 <span>{proyecto.titulo}</span>
                 <button type="button" className="panel__eliminar" onClick={() => eliminar(proyecto.id)}>
-                  Eliminar
+                  {t('dashboard.delete')}
                 </button>
               </li>
             ))}

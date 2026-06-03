@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { SCREEN_FRAMES } from './screens'
+import { useLanguage } from '../../hooks/useLanguage.js'
 import './ScreenModal.css'
 
 // Modal con forma de pantalla: muestra el marco pixelart flotando sobre el
 // cuarto (atenuado, visible en los bordes) y renderiza `children` dentro del
 // area de la pantalla. `frameId` selecciona el marco ('monitor' | 'tv').
 export default function ScreenModal({ frameId, onClose, children }) {
+  const { t } = useLanguage()
   const frame = SCREEN_FRAMES[frameId]
 
   // Cerrar con Escape.
@@ -40,7 +42,7 @@ export default function ScreenModal({ frameId, onClose, children }) {
           type="button"
           className="screen-frame__close"
           onClick={onClose}
-          aria-label="Cerrar"
+          aria-label={t('common.close')}
         >
           ✕
         </button>

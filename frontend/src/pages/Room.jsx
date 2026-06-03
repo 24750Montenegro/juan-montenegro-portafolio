@@ -8,6 +8,7 @@ import {
   toClipPath,
 } from '../game/geometry'
 import { useMovement } from '../game/useMovement'
+import { useLanguage } from '../hooks/useLanguage.js'
 import { loadInteractables, nearestInteractable } from '../game/interactables'
 import { loadPlacements, blockedByObjects, OBJECT_ASSETS } from '../game/objects'
 import Character from '../components/game/Character'
@@ -37,10 +38,11 @@ const WELCOME_KEY = 'welcome.seen.v1'
 
 // Zonas que se muestran en una ventana retro (sin marco PNG propio).
 // variant cambia el estilo: libro (conocimientos), diploma (logros) o terminal.
+// El titulo se traduce en tiempo de render con t('window.<id>').
 const WINDOW_SCREENS = {
-  conocimientos: { title: 'Mis Conocimientos', variant: 'book', Component: SkillsScreen },
-  logros: { title: 'Mis Logros', variant: 'medal', Component: AchievementsScreen },
-  social: { title: 'SOCIAL.EXE', variant: 'terminal', Component: SocialScreen },
+  conocimientos: { variant: 'book', Component: SkillsScreen },
+  logros: { variant: 'medal', Component: AchievementsScreen },
+  social: { variant: 'terminal', Component: SocialScreen },
 }
 
 // Punto inicial por defecto de los pies (si no hay portal donde aparecer)
@@ -75,6 +77,7 @@ function liftOnPortal(x, y, placements) {
 }
 
 export default function Room() {
+  const { t } = useLanguage()
   // 'monitor' | 'tv' | null. Con un modal abierto se pausa el movimiento.
   const [activeModal, setActiveModal] = useState(null)
   // Objetos colocados en el cuarto.
@@ -211,7 +214,7 @@ export default function Room() {
       {near && (
         <div className="room-prompt">
           <span className="room-prompt__key">E</span>
-          <span>{near.label}</span>
+          <span>{t(`interact.${near.id}`)}</span>
         </div>
       )}
 
@@ -225,7 +228,7 @@ export default function Room() {
       {/* Zonas en ventana retro (conocimientos / logros / social) */}
       {WINDOW_SCREENS[activeModal] && (
         <RetroWindow
-          title={WINDOW_SCREENS[activeModal].title}
+          title={t(`window.${activeModal}`)}
           variant={WINDOW_SCREENS[activeModal].variant}
           onClose={() => setActiveModal(null)}
         >
