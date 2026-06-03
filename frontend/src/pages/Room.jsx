@@ -19,9 +19,18 @@ import BreakoutGame from '../components/game/BreakoutGame'
 import SkillsScreen from '../components/game/SkillsScreen'
 import AchievementsScreen from '../components/game/AchievementsScreen'
 import SocialScreen from '../components/game/SocialScreen'
+import WelcomeModal from '../components/game/WelcomeModal'
 import RoomEditor from '../components/game/RoomEditor' // EDITOR (temporal)
 import roomImg from '../assets/habitación vacia.png'
 import './Room.css'
+
+// Codigo Konami que revela el boton del editor (easter egg).
+const KONAMI = [
+  'arrowup', 'arrowup', 'arrowdown', 'arrowdown',
+  'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a',
+]
+
+const WELCOME_KEY = 'welcome.seen.v1'
 
 // Zonas que se muestran en una ventana retro (sin marco PNG propio).
 // variant cambia el estilo: libro (conocimientos), diploma (logros) o terminal.
@@ -71,6 +80,45 @@ export default function Room() {
   const [interactables, setInteractables] = useState(loadInteractables)
   // EDITOR (temporal): si esta abierto, pausa el movimiento y muestra el panel.
   const [editorOpen, setEditorOpen] = useState(false)
+  // El boton del editor solo aparece tras descubrir el codigo Konami.
+  const [editorUnlocked, setEditorUnlocked] = useState(false)
+  // Bienvenida: aparece una vez por sesion del navegador.
+  const [welcomeOpen, setWelcomeOpen] = useState(() => {
+    try {
+      return !sessionStorage.getItem(WELCOME_KEY)
+    } catch {
+      return true
+    }
+  })
+
+  // Marca la bienvenida como vista para no repetirla en esta sesion.
+  const cerrarWelcome = useCallback(() => {
+    try {
+      sessionStorage.setItem(WELCOME_KEY, '1')
+    } catch {
+      /* ignora storage no disponible */
+    }
+    setWelcomeOpen(false)
+  }, [])
+
+  // Detecta el codigo Konami para revelar el editor.
+  useEffect(() => {
+    let idx = 0
+    const onKey = (e) => {
+      const k = e.key.toLowerCase()
+      if (k === KONAMI[idx]) {
+        idx += 1
+        if (idx === KONAMI.length) {
+          setEditorUnlocked(true)
+          idx = 0
+        }
+      } else {
+        idx = k === KONAMI[0] ? 1 : 0
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   // El personaje colisiona con la huella de los objetos solidos.
   const isBlocked = useCallback((x, y) => blockedByObjects(x, y, placements), [placements])
@@ -78,7 +126,7 @@ export default function Room() {
   // Punto de aparicion fijado una sola vez (sobre el portal).
   const spawnRef = useRef(null)
   if (spawnRef.current === null) spawnRef.current = spawnFrom(placements)
-  const { pos, facing, moving } = useMovement(spawnRef.current, activeModal !== null || editorOpen, isBlocked)
+  const { pos, facing, moving } = useMovement(spawnRef.current, activeModal !== null || editorOpen || welcomeOpen, isBlocked)
 
   const [scale, setScale] = useState(1)
   const viewportRef = useRef(null)
@@ -184,15 +232,21 @@ export default function Room() {
         </RetroWindow>
       )}
 
+      {/* Bienvenida (una vez por sesion) */}
+      {welcomeOpen && <WelcomeModal onClose={cerrarWelcome} />}
+
       {/* ===== EDITOR (temporal) — borrar este bloque cuando ya no se use ===== */}
-      <button
-        type="button"
-        className="editor-toggle"
-        onClick={() => setEditorOpen((o) => !o)}
-        title="Modo editor de objetos"
-      >
-        🛠
-      </button>
+      {/* El boton solo aparece tras descubrir el codigo Konami. */}
+      {editorUnlocked && (
+        <button
+          type="button"
+          className="editor-toggle"
+          onClick={() => setEditorOpen((o) => !o)}
+          title="Modo editor de objetos"
+        >
+          🛠
+        </button>
+      )}
       {editorOpen && (
         <RoomEditor
           placements={placements}
