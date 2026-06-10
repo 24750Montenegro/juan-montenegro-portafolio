@@ -1,0 +1,209 @@
+/* Estilos compartidos del arcade de la TV: lienzo de juego, scanlines,
+   menu de seleccion y easter egg. */
+.bgame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #07070f;
+}
+
+.bgame__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+  touch-action: none;
+  cursor: none;
+}
+
+/* Juegos sin control por puntero (tetris/pacman) conservan el cursor */
+.bgame__canvas--cursor {
+  cursor: default;
+}
+
+.bgame__scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.22) 3px,
+    rgba(0, 0, 0, 0.22) 4px
+  );
+}
+
+/* --- Menu de seleccion de juego --- */
+.arcade-menu {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-family: 'Press Start 2P', monospace;
+  text-align: center;
+}
+
+.arcade-menu__title {
+  margin: 0;
+  font-size: clamp(16px, 3.4vw, 28px);
+  color: #ff2e88;
+  text-shadow: 0 0 10px rgba(255, 46, 136, 0.7), 3px 3px 0 #2b2b50;
+  animation: arcade-glow 1.6s ease-in-out infinite;
+}
+
+.arcade-menu__sub {
+  margin: 0 0 0.6em;
+  font-size: clamp(7px, 1.4vw, 11px);
+  color: #7ad7ff;
+}
+
+.arcade-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7em;
+}
+
+.arcade-menu__item {
+  position: relative;
+  font-family: inherit;
+  font-size: clamp(10px, 2vw, 16px);
+  color: #cfe9ff;
+  background: none;
+  border: none;
+  padding: 0.2em 0.4em 0.2em 1.4em;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.arcade-menu__cursor {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+}
+
+.arcade-menu__item.is-active {
+  color: var(--game-color, #fffb96);
+  text-shadow: 0 0 8px var(--game-color, #fffb96);
+}
+.arcade-menu__item.is-active .arcade-menu__cursor {
+  opacity: 1;
+  animation: arcade-blink 0.7s steps(1) infinite;
+}
+
+.arcade-menu__hint {
+  margin: 1em 0 0;
+  font-size: clamp(6px, 1.2vw, 9px);
+  color: #7a7ab0;
+  animation: arcade-blink 1.4s steps(1) infinite;
+}
+
+/* Boton para volver al menu desde un juego */
+.arcade-menu-btn {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  z-index: 7;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(6px, 1.1vw, 9px);
+  color: #7a7ab0;
+  background: rgba(7, 7, 15, 0.6);
+  border: 1px solid #2b2b50;
+  padding: 0.5em 0.7em;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 120ms ease, color 120ms ease;
+}
+.arcade-menu-btn:hover {
+  opacity: 1;
+  color: #fffb96;
+  border-color: #ff2e88;
+}
+
+/* Capa del easter egg encima del juego pausado */
+.arcade-egg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+@keyframes arcade-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes arcade-glow {
+  50% {
+    text-shadow: 0 0 18px rgba(255, 46, 136, 1), 3px 3px 0 #2b2b50;
+  }
+}
+
+/* Easter egg: huevo que enlaza al Instagram */
+.bgame__egg {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  text-decoration: none;
+  background: rgba(7, 7, 15, 0.72);
+  cursor: pointer;
+  animation: egg-fade 220ms ease-out;
+}
+
+.bgame__egg-img {
+  width: auto;
+  height: 62%;
+  max-width: 60%;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 14px rgba(255, 46, 136, 0.7));
+  animation: egg-pop 600ms cubic-bezier(0.18, 1.3, 0.4, 1), egg-bob 2.4s ease-in-out 600ms infinite;
+}
+
+.bgame__egg-hint {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 1.6vw, 13px);
+  color: #fffb96;
+  text-shadow: 0 0 8px #ff2e88;
+  animation: egg-blink 0.9s steps(1) infinite;
+}
+
+@keyframes egg-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes egg-pop {
+  0% {
+    transform: scale(0) rotate(-25deg);
+  }
+  70% {
+    transform: scale(1.15) rotate(8deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes egg-bob {
+  50% {
+    transform: translateY(-6%);
+  }
+}
+
+@keyframes egg-blink {
+  50% {
+    opacity: 0.35;
+  }
+}

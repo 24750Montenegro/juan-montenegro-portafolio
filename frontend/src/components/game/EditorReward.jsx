@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLanguage } from '../../hooks/useLanguage.js'
-import caraSheet from '../../assets/cara1-sheet.png'
+import caraSheet from '../../assets/cara1-sheet.webp'
 import './EditorReward.css'
 
 // Frames del ciclo "hablando" en cara1-sheet.

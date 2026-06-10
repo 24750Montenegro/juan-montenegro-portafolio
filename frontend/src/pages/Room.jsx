@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
 import {
   ROOM_WIDTH,
   ROOM_HEIGHT,
@@ -15,16 +15,23 @@ import Character from '../components/game/Character'
 import RoomObjects from '../components/game/RoomObjects'
 import ScreenModal from '../components/game/ScreenModal'
 import RetroWindow from '../components/game/RetroWindow'
-import ProjectsScreen from '../components/game/ProjectsScreen'
-import BreakoutGame from '../components/game/BreakoutGame'
 import SkillsScreen from '../components/game/SkillsScreen'
 import AchievementsScreen from '../components/game/AchievementsScreen'
 import SocialScreen from '../components/game/SocialScreen'
 import WelcomeModal from '../components/game/WelcomeModal'
 import EditorReward from '../components/game/EditorReward'
-import RoomEditor from '../components/game/RoomEditor' // EDITOR (temporal)
-import roomImg from '../assets/habitación vacia.png'
+import roomImg from '../assets/habitación vacia.webp'
 import './Room.css'
+
+// Pantallas pesadas cargadas bajo demanda: solo se descargan al interactuar.
+const ProjectsScreen = lazy(() => import('../components/game/ProjectsScreen'))
+const ArcadeScreen = lazy(() => import('../components/game/arcade/ArcadeScreen'))
+const RoomEditor = lazy(() => import('../components/game/RoomEditor')) // EDITOR (temporal)
+
+// Aviso de carga retro para el contenido de las pantallas
+const cargandoPantalla = (
+  <div className="screen-loading" aria-hidden="true">CARGANDO…</div>
+)
 
 // Codigo Konami que revela el boton del editor (easter egg). Se acepta en
 // flechas o en WASD (igual que el easter egg del arcade), ambos terminan en B A.
@@ -181,7 +188,7 @@ export default function Room() {
           transform: `translate(-50%, -50%) scale(${scale})`,
         }}
       >
-        <img className="room-bg" src={roomImg} alt="habitacion" draggable="false" />
+        <img className="room-bg" src={roomImg} alt="habitacion" draggable="false" fetchpriority="high" />
 
         {/* Objetos colocados (escritorio, monitor, portal, medalla, etc.) */}
         <RoomObjects placements={placements} charPos={pos} />
@@ -221,7 +228,9 @@ export default function Room() {
       {/* Pantalla con marco PNG (monitor / tv) */}
       {(activeModal === 'monitor' || activeModal === 'tv') && (
         <ScreenModal frameId={activeModal} onClose={() => setActiveModal(null)}>
-          {activeModal === 'monitor' ? <ProjectsScreen /> : <BreakoutGame />}
+          <Suspense fallback={cargandoPantalla}>
+            {activeModal === 'monitor' ? <ProjectsScreen /> : <ArcadeScreen />}
+          </Suspense>
         </ScreenModal>
       )}
 
@@ -256,14 +265,16 @@ export default function Room() {
         </button>
       )}
       {editorOpen && (
-        <RoomEditor
-          placements={placements}
-          setPlacements={setPlacements}
-          interactables={interactables}
-          setInteractables={setInteractables}
-          stageRef={stageRef}
-          onClose={() => setEditorOpen(false)}
-        />
+        <Suspense fallback={null}>
+          <RoomEditor
+            placements={placements}
+            setPlacements={setPlacements}
+            interactables={interactables}
+            setInteractables={setInteractables}
+            stageRef={stageRef}
+            onClose={() => setEditorOpen(false)}
+          />
+        </Suspense>
       )}
       {/* ===== fin EDITOR (temporal) ===== */}
     </div>

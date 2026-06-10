@@ -41,6 +41,54 @@
   outline: 2px solid var(--color-acento);
 }
 
+/* Editor de enlaces adicionales del proyecto */
+.panel__enlaces {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  border: 1px dashed var(--color-borde);
+  border-radius: var(--radio-pequeno);
+  padding: var(--espacio-2);
+  font-size: 0.9rem;
+}
+
+.panel__enlaces legend {
+  padding: 0 0.4rem;
+  color: var(--color-texto-tenue);
+}
+
+.panel__enlace-fila {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) auto;
+  gap: var(--espacio-1);
+  align-items: center;
+}
+
+.panel__enlace-fila input {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pequeno);
+  background-color: var(--color-superficie-alta);
+}
+
+.panel__enlace-fila input:focus {
+  outline: 2px solid var(--color-acento);
+}
+
+.panel__agregar-enlace {
+  align-self: flex-start;
+  background: none;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pequeno);
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  color: var(--color-texto);
+}
+
+.panel__agregar-enlace:hover {
+  border-color: var(--color-acento);
+}
+
 .panel__error {
   color: var(--color-error);
   font-size: 0.9rem;

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import abajoSheet from '../../assets/abajo1-sheet.png'
-import arribaSheet from '../../assets/arriba1-sheet.png'
-import ladoSheet from '../../assets/lado-derecha-sheet.png'
+import abajoSheet from '../../assets/abajo1-sheet.webp'
+import arribaSheet from '../../assets/arriba1-sheet.webp'
+import ladoSheet from '../../assets/lado-derecha-sheet.webp'
 import './Character.css'
 
 // Altura visible del personaje (la parte dibujada, no el lienzo) en pixeles

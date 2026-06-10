@@ -8,6 +8,7 @@ import { useLanguage } from '../../hooks/useLanguage.js'
 import {
   apiCrearConocimiento, apiActualizarConocimiento, apiEliminarConocimiento,
 } from '../../api/skillsApi.js'
+import { optimizarImagen } from '../../utils/cloudinary.js'
 import './zones.css'
 import './SkillsScreen.css'
 
@@ -144,7 +145,7 @@ export default function SkillsScreen() {
               <li key={c.id} className="book-entry">
                 <div className="book-entry__logo">
                   {c.imagen_url
-                    ? <img src={c.imagen_url} alt={c.nombre} loading="lazy" />
+                    ? <img src={optimizarImagen(c.imagen_url, 128)} alt={c.nombre} loading="lazy" decoding="async" />
                     : <span className="book-entry__initial">{c.nombre.charAt(0)}</span>}
                 </div>
                 <div className="book-entry__main">

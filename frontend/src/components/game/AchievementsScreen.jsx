@@ -7,6 +7,7 @@ import { useLanguage } from '../../hooks/useLanguage.js'
 import {
   apiCrearLogro, apiActualizarLogro, apiEliminarLogro,
 } from '../../api/achievementsApi.js'
+import { optimizarImagen } from '../../utils/cloudinary.js'
 import './zones.css'
 import './AchievementsScreen.css'
 
@@ -119,7 +120,7 @@ export default function AchievementsScreen() {
           {logros.map((l) => (
             <li key={l.id} className="ach-card">
               {l.imagen_url && (
-                <img className="ach-card__img" src={l.imagen_url} alt={l.titulo} loading="lazy" />
+                <img className="ach-card__img" src={optimizarImagen(l.imagen_url, 480)} alt={l.titulo} loading="lazy" decoding="async" />
               )}
               <div className="ach-card__body">
                 <h3 className="ach-card__title">{l.titulo}</h3>

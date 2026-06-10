@@ -1,5 +1,5 @@
-import monitorImg from '../../assets/monitor.png'
-import tvImg from '../../assets/tv.png'
+import monitorImg from '../../assets/monitor.webp'
+import tvImg from '../../assets/tv.webp'
 
 // Marcos (imagenes pixelart) que actuan de "pantalla". El area de la pantalla
 // es la zona transparente del centro, medida sobre la imagen y expresada como

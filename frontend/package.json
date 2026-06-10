@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview --host"
+    "preview": "vite preview --host",
+    "optimize:img": "node scripts/convert-to-webp.mjs"
   },
   "dependencies": {
     "axios": "^1.7.7",
@@ -17,6 +18,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.3",
+    "sharp": "^0.34.5",
     "vite": "^5.4.10"
   }
 }

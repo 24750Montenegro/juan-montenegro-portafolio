@@ -1,17 +1,10 @@
 // Mini Breakout para la TV. Canvas pixelart con HUD, vidas y niveles.
 // Controles: mover con raton / flechas / A-D, lanzar y reiniciar con Espacio.
-// Easter egg: el codigo Konami (↑↑↓↓←→←→BA, en WASD o flechas) dispara una
-// explosion de puntaje y revela un huevo que enlaza al Instagram.
-import { useEffect, useRef, useState } from 'react'
-import { useLanguage } from '../../hooks/useLanguage.js'
-import eggImg from '../../assets/egg.png'
-import './BreakoutGame.css'
+// El easter egg (codigo Konami) vive en ArcadeScreen y pausa este juego.
+import { useEffect, useRef } from 'react'
+import { useLanguage } from '../../../hooks/useLanguage.js'
+import { W, H, PLAY_TOP, PALETTE, pixelText } from './constants.js'
 
-// Resolucion logica del canvas (proporcion ~ a la pantalla de la TV: 1.227)
-const W = 328
-const H = 268
-
-const PLAY_TOP = 30 // zona reservada para el HUD
 const PADDLE_W = 54
 const PADDLE_H = 7
 const BALL_R = 4
@@ -22,24 +15,10 @@ const B_GAP = 3
 const B_MARGIN = 10
 const B_TOP = 40
 const B_H = 12
-const ROW_COLORS = ['#ff2e88', '#ff7b00', '#fffb96', '#2cf6c2', '#7ad7ff']
 
-// Easter egg (codigo Konami). Se aceptan dos formas: todo WASD o todo flechas;
-// en ambas terminan con las letras B y A (como el clasico).
-const INSTAGRAM_URL = 'https://www.instagram.com/fmontenegro175/?hl=es'
-const KONAMI_WASD = ['w', 'w', 's', 's', 'a', 'd', 'a', 'd', 'b', 'a']
-const KONAMI_ARROW = [
-  'arrowup', 'arrowup', 'arrowdown', 'arrowdown',
-  'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a',
-]
-const EGG_BOOST = 999999 // puntos que suma la animacion
-const EGG_RAMP = 1.6 // segundos que tarda en subir el puntaje
-const EGG_SHOW_AT = 1.9 // segundos hasta revelar el huevo
-
-export default function BreakoutGame() {
+export default function Breakout({ scoreRef, pausedRef }) {
   const { t } = useLanguage()
   const canvasRef = useRef(null)
-  const [showEgg, setShowEgg] = useState(false)
 
   // Cadenas del HUD que dependen del idioma. Se guardan en un ref para que el
   // bucle del canvas (que solo se monta una vez) lea siempre el valor actual
@@ -67,8 +46,6 @@ export default function BreakoutGame() {
       paddle: { x: W / 2 - PADDLE_W / 2, vx: 0 },
       ball: { x: W / 2, y: H - 40, vx: 0, vy: 0, speed: 3.4 },
       keys: { left: false, right: false },
-      konami: [], // buffer de teclas recientes para el easter egg
-      egg: { active: false, t: 0, startScore: 0, shown: false, parts: [] },
     }
 
     function buildBricks() {
@@ -80,7 +57,7 @@ export default function BreakoutGame() {
             y: B_TOP + r * (B_H + B_GAP),
             w: bw,
             h: B_H,
-            color: ROW_COLORS[r % ROW_COLORS.length],
+            color: PALETTE[r % PALETTE.length],
             alive: true,
           })
         }
@@ -118,40 +95,9 @@ export default function BreakoutGame() {
     }
 
     function onAction() {
-      // Durante el easter egg no se reinicia el juego
-      if (game.egg.active) return
+      if (pausedRef.current) return
       if (game.state === 'ready') launch()
       else if (game.state === 'won' || game.state === 'lost') fullReset()
-    }
-
-    function triggerEgg() {
-      if (game.egg.active) return
-      game.egg.active = true
-      game.egg.t = 0
-      game.egg.startScore = game.score
-      game.egg.shown = false
-      // Confeti
-      game.egg.parts = Array.from({ length: 46 }, () => ({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        vy: 0.6 + Math.random() * 1.8,
-        s: 2 + Math.floor(Math.random() * 3),
-        c: ROW_COLORS[Math.floor(Math.random() * ROW_COLORS.length)],
-      }))
-    }
-
-    // Alimenta el buffer del codigo Konami y dispara el egg si coincide.
-    function feedKonami(key) {
-      const buf = game.konami
-      buf.push(key)
-      if (buf.length > 10) buf.shift()
-      if (buf.length === 10) {
-        const seq = buf.join(',')
-        if (seq === KONAMI_WASD.join(',') || seq === KONAMI_ARROW.join(',')) {
-          triggerEgg()
-          game.konami = []
-        }
-      }
     }
 
     startLevel()
@@ -159,8 +105,6 @@ export default function BreakoutGame() {
     // --- Entrada ---
     const onKeyDown = (e) => {
       const k = e.key.toLowerCase()
-      // El codigo se ingresa con pulsaciones discretas (ignora auto-repeticion)
-      if (!e.repeat) feedKonami(k)
       if (k === 'arrowleft' || k === 'a') game.keys.left = true
       else if (k === 'arrowright' || k === 'd') game.keys.right = true
       else if (k === ' ' || k === 'spacebar') {
@@ -187,27 +131,7 @@ export default function BreakoutGame() {
     canvas.addEventListener('pointerdown', onPointerDown)
 
     // --- Actualizacion ---
-    function updateEgg(f) {
-      game.egg.t += f / 60 // segundos aprox.
-      const ramp = Math.min(game.egg.t / EGG_RAMP, 1)
-      const eased = 1 - (1 - ramp) ** 3
-      game.score = Math.floor(game.egg.startScore + eased * EGG_BOOST)
-      for (const part of game.egg.parts) {
-        part.y += part.vy * f
-        if (part.y > H) part.y -= H
-      }
-      if (game.egg.t >= EGG_SHOW_AT && !game.egg.shown) {
-        game.egg.shown = true
-        setShowEgg(true)
-      }
-    }
-
     function update(f) {
-      if (game.egg.active) {
-        updateEgg(f)
-        return
-      }
-
       const p = game.paddle
       if (game.keys.left) p.x -= 5 * f
       if (game.keys.right) p.x += 5 * f
@@ -278,43 +202,13 @@ export default function BreakoutGame() {
     }
 
     // --- Dibujo ---
-    function text(str, x, y, size, color, align = 'center') {
-      ctx.fillStyle = color
-      ctx.font = `${size}px "Press Start 2P", monospace`
-      ctx.textAlign = align
-      ctx.textBaseline = 'middle'
-      ctx.fillText(str, x, y)
-    }
-
-    function drawEgg() {
-      const t = game.egg.t
-      // Fondo que parpadea entre colores
-      ctx.fillStyle = `hsl(${(t * 220) % 360}, 65%, 10%)`
-      ctx.fillRect(0, 0, W, H)
-      // Confeti
-      for (const part of game.egg.parts) {
-        ctx.fillStyle = part.c
-        ctx.fillRect(part.x, part.y, part.s, part.s)
-      }
-      const flash = Math.floor(t * 10) % 2 === 0
-      text('KONAMI', W / 2, H / 2 - 44, 18, flash ? '#fffb96' : '#ff2e88')
-      text('CODE!', W / 2, H / 2 - 20, 18, flash ? '#2cf6c2' : '#7ad7ff')
-      text(String(game.score).padStart(7, '0'), W / 2, H / 2 + 22, 16, '#ffffff')
-      text('+ + + S C O R E + + +', W / 2, H / 2 + 48, 7, '#7cf0c6')
-    }
-
     function draw() {
-      if (game.egg.active) {
-        drawEgg()
-        return
-      }
-
       ctx.fillStyle = '#07070f'
       ctx.fillRect(0, 0, W, H)
 
       // HUD
-      text(`SCORE ${game.score}`, 8, 14, 8, '#fffb96', 'left')
-      text(`LV ${game.level}`, W / 2, 14, 8, '#2cf6c2', 'center')
+      pixelText(ctx, `SCORE ${game.score}`, 8, 14, 8, '#fffb96', 'left')
+      pixelText(ctx, `LV ${game.level}`, W / 2, 14, 8, '#2cf6c2', 'center')
       for (let i = 0; i < game.lives; i += 1) {
         ctx.fillStyle = '#ff2e88'
         ctx.fillRect(W - 10 - i * 12, 9, 8, 8)
@@ -345,14 +239,14 @@ export default function BreakoutGame() {
 
       // Mensajes de estado
       if (game.state === 'ready') {
-        text('BREAKOUT', W / 2, H / 2 - 14, 14, '#ff2e88')
-        text(msgsRef.current.spaceClick, W / 2, H / 2 + 16, 8, '#cfe9ff')
+        pixelText(ctx, 'BREAKOUT', W / 2, H / 2 - 14, 14, '#ff2e88')
+        pixelText(ctx, msgsRef.current.spaceClick, W / 2, H / 2 + 16, 8, '#cfe9ff')
       } else if (game.state === 'won') {
-        text('YOU WIN!', W / 2, H / 2 - 12, 16, '#2cf6c2')
-        text(msgsRef.current.spacePlay, W / 2, H / 2 + 16, 8, '#cfe9ff')
+        pixelText(ctx, 'YOU WIN!', W / 2, H / 2 - 12, 16, '#2cf6c2')
+        pixelText(ctx, msgsRef.current.spacePlay, W / 2, H / 2 + 16, 8, '#cfe9ff')
       } else if (game.state === 'lost') {
-        text('GAME OVER', W / 2, H / 2 - 12, 14, '#ff4d6d')
-        text(msgsRef.current.spaceRetry, W / 2, H / 2 + 16, 7, '#cfe9ff')
+        pixelText(ctx, 'GAME OVER', W / 2, H / 2 - 12, 14, '#ff4d6d')
+        pixelText(ctx, msgsRef.current.spaceRetry, W / 2, H / 2 + 16, 7, '#cfe9ff')
       }
     }
 
@@ -362,8 +256,11 @@ export default function BreakoutGame() {
     const loop = (now) => {
       const f = Math.min((now - last) / (1000 / 60), 3)
       last = now
-      update(f)
-      draw()
+      if (!pausedRef.current) {
+        update(f)
+        draw()
+        if (scoreRef) scoreRef.current = game.score
+      }
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
@@ -375,24 +272,7 @@ export default function BreakoutGame() {
       canvas.removeEventListener('pointermove', onPointerMove)
       canvas.removeEventListener('pointerdown', onPointerDown)
     }
-  }, [])
+  }, [scoreRef, pausedRef])
 
-  return (
-    <div className="bgame">
-      <canvas ref={canvasRef} width={W} height={H} className="bgame__canvas" />
-      <div className="bgame__scanlines" aria-hidden="true" />
-
-      {showEgg && (
-        <a
-          className="bgame__egg"
-          href={INSTAGRAM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img className="bgame__egg-img" src={eggImg} alt="Easter egg" draggable="false" />
-          <span className="bgame__egg-hint">¡click! → @fmontenegro175</span>
-        </a>
-      )}
-    </div>
-  )
+  return <canvas ref={canvasRef} width={W} height={H} className="bgame__canvas" />
 }

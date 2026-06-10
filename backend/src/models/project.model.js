@@ -18,14 +18,16 @@ export const obtenerProyecto = async (id) => {
 // Inserta un proyecto y devuelve el registro creado
 export const insertarProyecto = async (datos) => {
   const {
-    titulo, descripcion, imagenUrl, imagenId, repoUrl, demoUrl, etiquetas, destacado, orden,
+    titulo, descripcion, imagenUrl, imagenId, repoUrl, demoUrl, enlaces, etiquetas, destacado, orden,
   } = datos;
   const { rows } = await query(
     `INSERT INTO proyectos
-       (titulo, descripcion, imagen_url, imagen_id, repo_url, demo_url, etiquetas, destacado, orden)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       (titulo, descripcion, imagen_url, imagen_id, repo_url, demo_url, enlaces, etiquetas, destacado, orden)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
      RETURNING *`,
-    [titulo, descripcion, imagenUrl, imagenId, repoUrl, demoUrl, etiquetas, destacado, orden],
+    // jsonb requiere el valor serializado (pg convertiria un arreglo JS a array de Postgres)
+    [titulo, descripcion, imagenUrl, imagenId, repoUrl, demoUrl,
+      JSON.stringify(enlaces ?? []), etiquetas, destacado, orden],
   );
   return rows[0];
 };
@@ -39,6 +41,7 @@ export const actualizarProyecto = async (id, datos) => {
     imagen_id: datos.imagenId,
     repo_url: datos.repoUrl,
     demo_url: datos.demoUrl,
+    enlaces: datos.enlaces === undefined ? undefined : JSON.stringify(datos.enlaces),
     etiquetas: datos.etiquetas,
     destacado: datos.destacado,
     orden: datos.orden,

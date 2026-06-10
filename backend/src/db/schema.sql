@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS proyectos (
   imagen_id       VARCHAR(255),
   repo_url        VARCHAR(500),
   demo_url        VARCHAR(500),
+  enlaces         JSONB        NOT NULL DEFAULT '[]',
   etiquetas       TEXT[]       NOT NULL DEFAULT '{}',
   destacado       BOOLEAN      NOT NULL DEFAULT FALSE,
   orden           INTEGER      NOT NULL DEFAULT 0,
@@ -24,6 +25,9 @@ CREATE TABLE IF NOT EXISTS proyectos (
 );
 
 CREATE INDEX IF NOT EXISTS idx_proyectos_orden ON proyectos (orden);
+
+-- Enlaces adicionales por proyecto (p. ej. repos separados de frontend/backend)
+ALTER TABLE proyectos ADD COLUMN IF NOT EXISTS enlaces JSONB NOT NULL DEFAULT '[]';
 
 -- Conocimientos: habilidades con logo, detalle y nivel de progreso
 CREATE TABLE IF NOT EXISTS conocimientos (

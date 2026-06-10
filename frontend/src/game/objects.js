@@ -2,19 +2,19 @@
 //
 // Las imagenes "ya implementadas" (sheets del personaje y fondo del cuarto) NO
 // estan aqui. El resto de assets son objetos que se colocan con el editor.
-import beanbag from '../assets/beanbag.png'
-import egg from '../assets/egg.png'
-import escritorio from '../assets/escritorio.png'
-import gamingChairSheet from '../assets/gaming-chair1-sheet.png'
-import monitor from '../assets/monitor.png'
-import tablero from '../assets/tablero.png'
-import tv from '../assets/tv.png'
-import medallaSheet from '../assets/medalla1-sheet.png'
-import portalSheet from '../assets/portal1-sheet.png'
-import nintendo from '../assets/nintendo1.png'
-import plantita from '../assets/plantita.png'
-import repisa from '../assets/repisa.png'
-import cama from '../assets/cama.png'
+import beanbag from '../assets/beanbag.webp'
+import egg from '../assets/egg.webp'
+import escritorio from '../assets/escritorio.webp'
+import gamingChairSheet from '../assets/gaming-chair1-sheet.webp'
+import monitor from '../assets/monitor.webp'
+import tablero from '../assets/tablero.webp'
+import tv from '../assets/tv.webp'
+import medallaSheet from '../assets/medalla1-sheet.webp'
+import portalSheet from '../assets/portal1-sheet.webp'
+import nintendo from '../assets/nintendo1.webp'
+import plantita from '../assets/plantita.webp'
+import repisa from '../assets/repisa.webp'
+import cama from '../assets/cama.webp'
 
 // kind 'static' = imagen fija. kind 'sprite' = spritesheet horizontal animada.
 // native: tamano nativo en px (para sprites, tamano de UN frame).

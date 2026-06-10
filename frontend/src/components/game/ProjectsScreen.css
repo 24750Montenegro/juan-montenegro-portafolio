@@ -109,11 +109,98 @@
   background: rgba(43, 43, 80, 0.35);
   border: 2px solid #2b2b50;
   border-left: 4px solid #2cf6c2;
+  cursor: pointer;
   transition: border-color 120ms ease, background 120ms ease;
 }
 .pscreen__card:hover {
   border-color: #ff2e88;
   background: rgba(255, 46, 136, 0.1);
+}
+.pscreen__card:focus-visible {
+  outline: 2px dashed #fffb96;
+  outline-offset: 2px;
+}
+
+/* Tarjeta expandida: imagen arriba, texto abajo */
+.pscreen__card--open {
+  flex-direction: column;
+  border-left-color: #ff2e88;
+  background: rgba(255, 46, 136, 0.08);
+}
+
+.pscreen__hero {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 2px solid #12122a;
+  image-rendering: auto;
+}
+
+/* Indicador de expandir/cerrar en el titulo */
+.pscreen__chevron {
+  float: right;
+  margin-left: 0.6em;
+  color: #7a7ab0;
+  font-size: 0.85em;
+}
+.pscreen__card--open .pscreen__chevron {
+  color: #ff2e88;
+}
+
+/* Descripcion recortada a dos lineas cuando la tarjeta esta cerrada */
+.pscreen__desc--clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Indicador de enlaces adicionales en tarjeta cerrada */
+.pscreen__more {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 1.2vw, 11px);
+  color: #0a0a16;
+  background: #fffb96;
+  padding: 0.3em 0.45em;
+}
+
+/* Botones grandes de recursos en tarjeta expandida */
+.pscreen__resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em;
+  margin-bottom: 0.5em;
+}
+
+.pscreen__res-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(8px, 1.4vw, 12px);
+  color: #0a0a16;
+  background: #2cf6c2;
+  border: 2px solid #12122a;
+  box-shadow: 3px 3px 0 #12122a;
+  padding: 0.8em 1em;
+  text-decoration: none;
+  transition: transform 100ms ease, background 120ms ease;
+}
+.pscreen__res-btn:hover {
+  background: #ff2e88;
+  color: #fff;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #12122a;
+}
+.pscreen__res-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #12122a;
+}
+.pscreen__res-btn img {
+  width: 1.6em;
+  height: 1.6em;
+  image-rendering: pixelated;
 }
 
 .pscreen__thumb {
@@ -223,6 +310,34 @@
 }
 .pscreen__btn:hover {
   background: #ff2e88;
+}
+
+/* Editor de enlaces adicionales en el formulario */
+.pscreen__links {
+  border: 2px dashed #2b2b50;
+  padding: 0.6em 0.7em 0.8em;
+  margin: 0;
+  display: grid;
+  gap: 0.5em;
+  justify-items: start;
+}
+.pscreen__links legend {
+  padding: 0 0.4em;
+  color: #7ad7ff;
+  font-size: clamp(14px, 2vw, 18px);
+}
+
+.pscreen__link-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) auto;
+  gap: 0.4em;
+  align-items: center;
+}
+
+.pscreen__link-del {
+  padding-left: 0.6em;
+  padding-right: 0.6em;
 }
 
 /* Scanlines CRT sutiles encima de todo el contenido */
