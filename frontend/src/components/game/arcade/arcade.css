@@ -103,25 +103,27 @@
   animation: arcade-blink 1.4s steps(1) infinite;
 }
 
-/* Botonera del arcade: cruceta y boton A, visibles en desktop y movil */
+/* Botonera del arcade: cruceta y botones B/A. Va FUERA del marco de la TV
+   (fija a los bordes de la pantalla, montada en <body> via portal, por
+   encima del overlay del modal). Visible en desktop y movil. */
 .arcade-pad {
   display: contents;
 }
 
 .arcade-pad__dpad {
-  position: absolute;
-  left: 8px;
-  bottom: 8px;
-  z-index: 7;
+  position: fixed;
+  left: calc(14px + env(safe-area-inset-left, 0px));
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  z-index: 70;
   display: grid;
   grid-template-areas:
     '. up .'
     'left mid right'
     '. down .';
-  grid-template-columns: repeat(3, clamp(26px, 7vmin, 38px));
-  grid-template-rows: repeat(3, clamp(26px, 7vmin, 38px));
-  gap: 2px;
-  opacity: 0.55;
+  grid-template-columns: repeat(3, clamp(44px, 12vmin, 58px));
+  grid-template-rows: repeat(3, clamp(44px, 12vmin, 58px));
+  gap: 3px;
+  opacity: 0.8;
   transition: opacity 150ms ease;
   touch-action: none;
   user-select: none;
@@ -130,18 +132,19 @@
 }
 .arcade-pad__dpad:hover,
 .arcade-pad__dpad:active {
-  opacity: 0.95;
+  opacity: 1;
 }
 
 .arcade-pad__btn {
   display: grid;
   place-items: center;
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(8px, 2vmin, 12px);
+  font-size: 14px;
   color: #7cf0c6;
   background: rgba(10, 10, 22, 0.8);
   border: 2px solid #2cf6c2;
-  border-radius: 7px;
+  border-radius: 9px;
+  box-shadow: 0 0 10px rgba(44, 246, 194, 0.25);
   padding: 0;
   cursor: pointer;
   touch-action: none;
@@ -153,25 +156,23 @@
 
 .arcade-pad__mid {
   grid-area: mid;
-  border-radius: 7px;
+  border-radius: 9px;
   background: rgba(10, 10, 22, 0.45);
 }
 
+/* Botones de accion B/A en diagonal (estilo NES): A arriba-derecha,
+   B abajo-izquierda */
 .arcade-pad__action {
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  z-index: 7;
-  width: clamp(40px, 11vmin, 58px);
-  height: clamp(40px, 11vmin, 58px);
+  position: fixed;
+  z-index: 70;
+  width: clamp(56px, 15vmin, 72px);
+  height: clamp(56px, 15vmin, 72px);
   border-radius: 50%;
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(11px, 2.6vmin, 16px);
+  font-size: clamp(16px, 4vmin, 22px);
   color: #0a0a16;
-  background: #ff2e88;
-  border: 2px solid #12122a;
-  box-shadow: 0 0 12px rgba(255, 46, 136, 0.45);
-  opacity: 0.55;
+  border: 3px solid #12122a;
+  opacity: 0.8;
   transition: opacity 150ms ease;
   cursor: pointer;
   touch-action: none;
@@ -181,7 +182,21 @@
 }
 .arcade-pad__action:hover,
 .arcade-pad__action:active {
-  opacity: 0.95;
+  opacity: 1;
+}
+
+.arcade-pad__action--a {
+  right: calc(18px + env(safe-area-inset-right, 0px));
+  bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  background: #ff2e88;
+  box-shadow: 0 0 12px rgba(255, 46, 136, 0.45);
+}
+
+.arcade-pad__action--b {
+  right: calc(18px + clamp(56px, 15vmin, 72px) + 12px + env(safe-area-inset-right, 0px));
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  background: #7ad7ff;
+  box-shadow: 0 0 12px rgba(122, 215, 255, 0.45);
 }
 
 /* Boton presionado (tactil, clic o eco del teclado fisico) */
@@ -196,11 +211,11 @@
   box-shadow: 0 0 16px rgba(255, 251, 150, 0.7);
 }
 
-/* Boton para volver al menu desde un juego (sobre el boton A) */
+/* Boton para volver al menu desde un juego */
 .arcade-menu-btn {
   position: absolute;
   right: 8px;
-  bottom: calc(8px + clamp(40px, 11vmin, 58px) + 8px);
+  bottom: 8px;
   z-index: 7;
   font-family: 'Press Start 2P', monospace;
   font-size: clamp(6px, 1.1vw, 9px);

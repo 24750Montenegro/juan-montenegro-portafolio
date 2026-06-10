@@ -1,8 +1,14 @@
-// Botonera del arcade: cruceta (izquierda) y boton A (derecha), visibles en
-// desktop y movil. Los botones despachan eventos de teclado sinteticos
-// (flechas / espacio), asi los juegos no necesitan logica extra; ademas
-// escucha el teclado fisico para iluminar el boton correspondiente.
+// Botonera del arcade: cruceta (izquierda) y botones B/A (derecha), fijos en
+// los bordes de la pantalla, FUERA del marco de la TV (como los controles
+// tactiles del cuarto). Visibles en desktop y movil. Los botones despachan
+// eventos de teclado sinteticos (flechas, 'b', espacio), asi los juegos no
+// necesitan logica extra; ademas escucha el teclado fisico para iluminar el
+// boton correspondiente. Con B y A se puede ingresar el codigo Konami
+// (cruceta + B + A) tambien en tactil.
+// Se monta via portal en <body>: el marco de la TV tiene filter/overflow que
+// recortarian un position: fixed interno.
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useLanguage } from '../../../hooks/useLanguage.js'
 
 const DIRS = [
@@ -14,16 +20,18 @@ const DIRS = [
 
 // Tecla sintetica que dispara cada boton
 const KEY_FOR = {
-  up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight', action: ' ',
+  up: 'ArrowUp', down: 'ArrowDown', left: 'ArrowLeft', right: 'ArrowRight',
+  a: ' ', b: 'b',
 }
 
 // Teclas fisicas que iluminan cada boton (eco visual)
 const MATCH = {
   arrowup: 'up', w: 'up',
   arrowdown: 'down', s: 'down',
-  arrowleft: 'left', a: 'left',
+  arrowleft: 'left',
   arrowright: 'right', d: 'right',
-  ' ': 'action', spacebar: 'action',
+  ' ': 'a', spacebar: 'a',
+  b: 'b',
 }
 
 // Auto-repeticion al mantener presionada una direccion (mover en Tetris)
@@ -67,7 +75,7 @@ export default function ArcadePad() {
     // Captura el puntero: el keyup llega aunque el dedo se deslice fuera
     e.currentTarget.setPointerCapture?.(e.pointerId)
     fire(id, 'keydown')
-    if (id !== 'action') {
+    if (id !== 'a' && id !== 'b') {
       limpiar(id)
       repeats.current[id] = setInterval(() => fire(id, 'keydown', true), REPEAT_MS)
     }
@@ -78,7 +86,14 @@ export default function ArcadePad() {
     fire(id, 'keyup')
   }
 
-  return (
+  const botonProps = (id) => ({
+    onPointerDown: press(id),
+    onPointerUp: release(id),
+    onPointerCancel: release(id),
+    onLostPointerCapture: release(id),
+  })
+
+  return createPortal(
     <div className="arcade-pad" onContextMenu={(e) => e.preventDefault()}>
       <div className="arcade-pad__dpad">
         {DIRS.map((d) => (
@@ -87,10 +102,7 @@ export default function ArcadePad() {
             type="button"
             className={`arcade-pad__btn arcade-pad__btn--${d.id}${activos[d.id] ? ' is-down' : ''}`}
             aria-label={t(`touch.${d.id}`)}
-            onPointerDown={press(d.id)}
-            onPointerUp={release(d.id)}
-            onPointerCancel={release(d.id)}
-            onLostPointerCapture={release(d.id)}
+            {...botonProps(d.id)}
           >
             {d.glyph}
           </button>
@@ -100,15 +112,21 @@ export default function ArcadePad() {
 
       <button
         type="button"
-        className={`arcade-pad__action${activos.action ? ' is-down' : ''}`}
+        className={`arcade-pad__action arcade-pad__action--b${activos.b ? ' is-down' : ''}`}
+        aria-label="B"
+        {...botonProps('b')}
+      >
+        B
+      </button>
+      <button
+        type="button"
+        className={`arcade-pad__action arcade-pad__action--a${activos.a ? ' is-down' : ''}`}
         aria-label={t('arcade.action')}
-        onPointerDown={press('action')}
-        onPointerUp={release('action')}
-        onPointerCancel={release('action')}
-        onLostPointerCapture={release('action')}
+        {...botonProps('a')}
       >
         A
       </button>
-    </div>
+    </div>,
+    document.body,
   )
 }
