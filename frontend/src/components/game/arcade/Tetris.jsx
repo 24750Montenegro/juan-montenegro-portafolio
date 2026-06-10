@@ -8,7 +8,9 @@ import { W, H, PLAY_TOP, pixelText } from './constants.js'
 const COLS = 10
 const ROWS = 20
 const CELL = 11
-const BOARD_X = 18
+// Tablero centrado: deja libre la esquina inferior izquierda (cruceta en
+// pantalla) y la derecha (boton A)
+const BOARD_X = 104
 const BOARD_Y = PLAY_TOP + 6
 const PANEL_X = BOARD_X + COLS * CELL + 22
 

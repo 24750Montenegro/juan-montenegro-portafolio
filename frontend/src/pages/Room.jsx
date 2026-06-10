@@ -9,6 +9,7 @@ import {
 } from '../game/geometry'
 import { useMovement } from '../game/useMovement'
 import { useLanguage } from '../hooks/useLanguage.js'
+import { useMediaQuery } from '../hooks/useMediaQuery.js'
 import { loadInteractables, nearestInteractable } from '../game/interactables'
 import { loadPlacements, blockedByObjects, OBJECT_ASSETS } from '../game/objects'
 import Character from '../components/game/Character'
@@ -20,6 +21,8 @@ import AchievementsScreen from '../components/game/AchievementsScreen'
 import SocialScreen from '../components/game/SocialScreen'
 import WelcomeModal from '../components/game/WelcomeModal'
 import EditorReward from '../components/game/EditorReward'
+import TouchControls from '../components/game/TouchControls'
+import RotateHint from '../components/game/RotateHint'
 import roomImg from '../assets/habitación vacia.webp'
 import './Room.css'
 
@@ -42,6 +45,7 @@ const KONAMI_SECUENCIAS = [
 const KONAMI_LEN = 10
 
 const WELCOME_KEY = 'welcome.seen.v1'
+const ROTATE_KEY = 'rotate.dismissed.v1'
 
 // Zonas que se muestran en una ventana retro (sin marco PNG propio).
 // variant cambia el estilo: libro (conocimientos), diploma (logros) o terminal.
@@ -85,6 +89,26 @@ function liftOnPortal(x, y, placements) {
 
 export default function Room() {
   const { t } = useLanguage()
+  // Pantalla tactil (movil/tablet): muestra cruceta y boton de interaccion.
+  const esTactil = useMediaQuery('(pointer: coarse)')
+  const esVertical = useMediaQuery('(orientation: portrait)')
+  // Aviso de "gira tu dispositivo": descartable, una vez por sesion.
+  const [rotateDismissed, setRotateDismissed] = useState(() => {
+    try {
+      return Boolean(sessionStorage.getItem(ROTATE_KEY))
+    } catch {
+      return false
+    }
+  })
+  const descartarRotate = useCallback(() => {
+    try {
+      sessionStorage.setItem(ROTATE_KEY, '1')
+    } catch {
+      /* ignora storage no disponible */
+    }
+    setRotateDismissed(true)
+  }, [])
+
   // 'monitor' | 'tv' | null. Con un modal abierto se pausa el movimiento.
   const [activeModal, setActiveModal] = useState(null)
   // Objetos colocados en el cuarto.
@@ -107,6 +131,9 @@ export default function Room() {
   })
 
   // Marca la bienvenida como vista para no repetirla en esta sesion.
+  // En tactil aprovecha el gesto del usuario para intentar pantalla completa
+  // con orientacion horizontal; si el navegador no lo permite (p. ej. iOS
+  // Safari), quedan los controles tactiles y el aviso de rotacion.
   const cerrarWelcome = useCallback(() => {
     try {
       sessionStorage.setItem(WELCOME_KEY, '1')
@@ -114,7 +141,13 @@ export default function Room() {
       /* ignora storage no disponible */
     }
     setWelcomeOpen(false)
-  }, [])
+    if (esTactil) {
+      Promise.resolve()
+        .then(() => document.documentElement.requestFullscreen?.())
+        .then(() => window.screen.orientation?.lock?.('landscape'))
+        .catch(() => { /* bloqueo de orientacion no soportado */ })
+    }
+  }, [esTactil])
 
   // Detecta el codigo Konami (flechas o WASD) para revelar el editor.
   useEffect(() => {
@@ -140,7 +173,7 @@ export default function Room() {
   // Punto de aparicion fijado una sola vez (sobre el portal).
   const spawnRef = useRef(null)
   if (spawnRef.current === null) spawnRef.current = spawnFrom(placements)
-  const { pos, facing, moving } = useMovement(spawnRef.current, activeModal !== null || editorOpen || welcomeOpen, isBlocked)
+  const { pos, facing, moving, pressDir } = useMovement(spawnRef.current, activeModal !== null || editorOpen || welcomeOpen, isBlocked)
 
   const [scale, setScale] = useState(1)
   const viewportRef = useRef(null)
@@ -217,12 +250,26 @@ export default function Room() {
         />
       </div>
 
-      {/* Aviso de interaccion */}
-      {near && (
+      {/* Aviso de interaccion (en tactil el boton E ya es el aviso) */}
+      {near && !esTactil && (
         <div className="room-prompt">
           <span className="room-prompt__key">E</span>
           <span>{t(`interact.${near.id}`)}</span>
         </div>
+      )}
+
+      {/* Controles tactiles: cruceta (izquierda) y boton E (derecha) */}
+      {esTactil && !activeModal && !editorOpen && !welcomeOpen && (
+        <TouchControls
+          onDir={pressDir}
+          onInteract={() => near && setActiveModal(near.screen)}
+          nearLabel={near ? t(`interact.${near.id}`) : null}
+        />
+      )}
+
+      {/* Sugerencia de girar el dispositivo (tactil + vertical) */}
+      {esTactil && esVertical && !rotateDismissed && (
+        <RotateHint onDismiss={descartarRotate} />
       )}
 
       {/* Pantalla con marco PNG (monitor / tv) */}

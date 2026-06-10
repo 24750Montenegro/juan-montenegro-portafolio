@@ -1,0 +1,92 @@
+/* Controles tactiles del cuarto (solo pantallas con pointer: coarse) */
+.touch-controls {
+  display: contents;
+}
+
+/* Cruceta de movimiento, esquina inferior izquierda */
+.touch-dpad {
+  position: fixed;
+  left: calc(14px + env(safe-area-inset-left, 0px));
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  display: grid;
+  grid-template-areas:
+    '. up .'
+    'left mid right'
+    '. down .';
+  grid-template-columns: repeat(3, clamp(46px, 13vmin, 60px));
+  grid-template-rows: repeat(3, clamp(46px, 13vmin, 60px));
+  gap: 3px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.touch-dpad__btn {
+  display: grid;
+  place-items: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 15px;
+  color: #7cf0c6;
+  background: rgba(10, 10, 22, 0.78);
+  border: 2px solid #2cf6c2;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(44, 246, 194, 0.25);
+  touch-action: none;
+  padding: 0;
+}
+.touch-dpad__btn:active {
+  background: rgba(44, 246, 194, 0.4);
+  color: #fff;
+}
+
+.touch-dpad__btn--up { grid-area: up; }
+.touch-dpad__btn--left { grid-area: left; }
+.touch-dpad__btn--right { grid-area: right; }
+.touch-dpad__btn--down { grid-area: down; }
+
+.touch-dpad__center {
+  grid-area: mid;
+  border-radius: 10px;
+  background: rgba(10, 10, 22, 0.45);
+}
+
+/* Boton de interaccion (E), esquina inferior derecha */
+.touch-interact {
+  position: fixed;
+  right: calc(18px + env(safe-area-inset-right, 0px));
+  bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  width: clamp(64px, 18vmin, 84px);
+  height: clamp(64px, 18vmin, 84px);
+  border-radius: 50%;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 26px;
+  color: #0a0a16;
+  background: #2cf6c2;
+  border: 3px solid #12122a;
+  box-shadow: 0 0 14px rgba(44, 246, 194, 0.45);
+  opacity: 0.3;
+  transition: opacity 150ms ease;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.touch-interact.is-active {
+  opacity: 1;
+  animation: touch-interact-pulse 1s ease-in-out infinite;
+}
+.touch-interact.is-active:active {
+  background: #ff2e88;
+  color: #fff;
+}
+
+@keyframes touch-interact-pulse {
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 22px rgba(44, 246, 194, 0.7);
+  }
+}

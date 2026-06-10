@@ -9,6 +9,7 @@ import Breakout from './Breakout.jsx'
 import Tetris from './Tetris.jsx'
 import Pacman from './Pacman.jsx'
 import EggOverlay from './EggOverlay.jsx'
+import ArcadePad from './ArcadePad.jsx'
 import './arcade.css'
 
 const GAMES = [
@@ -81,6 +82,8 @@ export default function ArcadeScreen() {
         <>
           {/* key fuerza partida nueva al reentrar al mismo juego */}
           <juego.Component key={juego.id} scoreRef={scoreRef} pausedRef={pausedRef} />
+          {/* Botonera en pantalla (desktop y movil); se oculta durante el egg */}
+          {!eggActive && <ArcadePad />}
           <button
             type="button"
             className="arcade-menu-btn"

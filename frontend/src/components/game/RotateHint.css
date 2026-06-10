@@ -1,0 +1,60 @@
+/* Overlay de "gira tu dispositivo" (solo tactil + vertical) */
+.rotate-hint {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9em;
+  padding: 24px;
+  text-align: center;
+  background: rgba(6, 6, 12, 0.94);
+  font-family: 'Press Start 2P', monospace;
+}
+
+.rotate-hint__phone {
+  font-size: 54px;
+  animation: rotate-hint-spin 1.6s ease-in-out infinite;
+}
+
+.rotate-hint__title {
+  margin: 0;
+  font-size: clamp(13px, 4vw, 18px);
+  color: #2cf6c2;
+  text-shadow: 0 0 10px rgba(44, 246, 194, 0.6);
+}
+
+.rotate-hint__sub {
+  margin: 0;
+  font-size: clamp(8px, 2.6vw, 11px);
+  color: #7a7ab0;
+}
+
+.rotate-hint__btn {
+  margin-top: 1.2em;
+  font-family: inherit;
+  font-size: clamp(9px, 2.8vw, 12px);
+  color: #0a0a16;
+  background: #fffb96;
+  border: 2px solid #12122a;
+  box-shadow: 3px 3px 0 #12122a;
+  padding: 0.9em 1.2em;
+  cursor: pointer;
+}
+.rotate-hint__btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #12122a;
+}
+
+@keyframes rotate-hint-spin {
+  0%,
+  20% {
+    transform: rotate(0deg);
+  }
+  60%,
+  100% {
+    transform: rotate(90deg);
+  }
+}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { FLOOR, WALL_COLLISION, pointInPolygon } from './geometry'
 
 // Pisable: dentro del piso y fuera de las bandas de la pared interna
@@ -45,6 +45,13 @@ export function useMovement(start, paused = false, isBlocked = null) {
   useEffect(() => {
     blockedRef.current = isBlocked
   }, [isBlocked])
+
+  // Entrada externa (controles tactiles): presiona/suelta una direccion
+  // ('up' | 'down' | 'left' | 'right') igual que una tecla.
+  const pressDir = useCallback((dir, pressed) => {
+    if (pausedRef.current && pressed) return
+    if (dir in keys.current) keys.current[dir] = pressed
+  }, [])
 
   useEffect(() => {
     const onDown = (e) => {
@@ -121,5 +128,5 @@ export function useMovement(start, paused = false, isBlocked = null) {
     }
   }, [])
 
-  return { pos, facing, moving }
+  return { pos, facing, moving, pressDir }
 }
